@@ -1,0 +1,105 @@
+/* layout.css */
+
+/* --- Navbar --- */
+header {
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+header > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Para móviles */
+  gap: 1rem;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e3a8a; /* Azul fuerte */
+}
+
+/* --- Navigation --- */
+nav {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #1f2937; /* Gris oscuro */
+  transition: color 0.3s ease, border-bottom 0.3s ease, background 0.3s ease;
+  padding-bottom: 2px;
+}
+
+nav a:hover {
+  color: #1e3a8a; /* Azul */
+  border-bottom: 2px solid #1e3a8a;
+}
+
+nav a:last-child {
+  border: 1px solid #1e3a8a;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  color: #1e3a8a;
+}
+
+nav a:last-child:hover {
+  background: #1e3a8a;
+  color: white;
+  border-bottom: none;
+}
+
+/* --- Main --- */
+main {
+  padding: 2rem;
+  min-height: 70vh;
+}
+
+/* --- Footer --- */
+footer {
+  background: #1e3a8a; /* Azul oscuro */
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  header > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  nav a {
+    display: block;
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+  }
+
+  nav a:hover {
+    background: #f3f4f6; /* Gris claro al hover */
+    border-bottom: none;
+  }
+
+  nav a:last-child {
+    text-align: center;
+    width: 100%;
+  }
+}
