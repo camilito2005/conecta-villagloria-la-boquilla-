@@ -1,0 +1,58 @@
+import { Link } from "react-router-dom";
+import Manglar from "../assets/Manglares_LaBoquilla_Cartagena.jpg";
+import Canoas from "../assets/Canoas.jpg"
+import Guia from "../assets/Guia.jpg";
+import Comida from "../assets/comida.jpg";
+
+import "../css/home.css";
+
+export function Inicio(){
+    return (
+    <>
+      {/* Hero */}
+      <section
+        className="hero"
+        style={{ backgroundImage: `url(${Manglar})` }}
+      >
+        <div className="overlay">
+          <h2 className="text-hero">
+            conecta con La Boquilla, turismo comunitario y sostenible
+          </h2>
+          <Link to="/reservas" className="hero-btn">
+            Reserva tu experiencia
+          </Link>
+        </div>
+      </section>
+
+      {/* Tarjetas */}
+      <section className="cards">
+        <div className="card">
+          <img src={Canoas} alt="Canoa" />
+          <h3>Reservar Paseo en Canoa</h3>
+          <Link to="/reservas" className="botones-enviar">
+            Reservar
+          </Link>
+        </div>
+
+        <div className="card">
+          <img src={Guia} alt="Guías" />
+          <h3>Guías Locales</h3>
+          <Link to="/perfil" className="botones-enviar">
+            Conocer
+          </Link>
+        </div>
+
+        <div className="card">
+          <img src={Comida} alt="Marketplace" />
+          <h3>Marketplace de Artesanías y Comida</h3>
+          <Link to="/marketplace" className="botones-enviar">
+            Explorar
+          </Link>
+        </div>
+      </section>
+    </>
+  );
+
+}
+
+

@@ -1,0 +1,53 @@
+/* ====== Panel Administrador ====== */
+section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e3a8a; /* Azul intenso */
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+section p {
+  color: #4b5563; /* Gris */
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+section .grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+section .grid div {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+section .grid div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+section .grid h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1d4ed8; /* Azul brillante */
+  margin-bottom: 0.5rem;
+}
+
+section .grid p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}

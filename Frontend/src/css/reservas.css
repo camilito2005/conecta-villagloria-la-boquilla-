@@ -1,0 +1,105 @@
+/* reservas.css */
+
+.reservas-container {
+  max-width: 420px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.reservas-container h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #1e3a8a; /* Azul fuerte */
+  margin-bottom: 0.5rem;
+}
+
+.reservas-container p {
+  color: #4b5563; /* Gris */
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.reservas-container input[type="date"],
+.reservas-container select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.reservas-container input[type="date"]:focus,
+.reservas-container select:focus {
+  border: 1px solid #1e3a8a;
+}
+
+.reservas-container button {
+  width: 100%;
+  background: #1e3a8a; /* Azul oscuro */
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.reservas-container button:hover {
+  background: #1d4ed8; /* Azul más claro */
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .reservas-container {
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .reservas-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .reservas-container p {
+    font-size: 0.9rem;
+  }
+
+  .reservas-container button {
+    font-size: 0.95rem;
+    padding: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .reservas-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .reservas-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .reservas-container p {
+    font-size: 0.85rem;
+  }
+
+  .reservas-container input[type="date"],
+  .reservas-container select {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+
+  .reservas-container button {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+}
