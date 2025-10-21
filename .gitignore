@@ -1,38 +1,49 @@
-# ===============================
-# Node / React (Frontend)
-# ===============================
+# ==========================================
+# ⚙️ Node.js / React / Vite
+# ==========================================
 node_modules/
 dist/
 build/
-*.log
+.vite/
+.cache/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.vite/
-.next/
-out/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ==========================================
+# 🧩 Backend (Node + Express)
+# ==========================================
+.env
+.env.*
+*.log
+uploads/
+Recursos/
 coverage/
 
-# ===============================
-# PHP (Backend)
-# ===============================
-vendor/
-composer.lock
-.env
-*.log
-storage/
-.cache/
+# ==========================================
+# 💻 Frontend (React)
+# ==========================================
+# Archivos de build generados por Vite o React
+frontend/dist/
+frontend/node_modules/
 
-# ===============================
-# Docker
-# ===============================
-.docker/
+# ==========================================
+# 🐳 Docker
+# ==========================================
 docker-compose.override.yml
+.Dockerfile
+Dockerfile
+postgres_data/
+pgdata/
+tmp/
 
-# ===============================
-# IDE / Sistema
-# ===============================
+# ==========================================
+# 🧠 IDE / Sistema operativo
+# ==========================================
 .vscode/
 .idea/
 *.swp
@@ -40,9 +51,9 @@ docker-compose.override.yml
 *.DS_Store
 Thumbs.db
 
-# ===============================
-# Otros
-# ===============================
+# ==========================================
+# 🧰 Otros (entornos locales)
+# ==========================================
 .env.local
 .env.development.local
 .env.test.local
