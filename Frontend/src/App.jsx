@@ -8,6 +8,7 @@ import { Perfil } from "./paginas/perfil.jsx";
 import { Registro } from "./paginas/registro.jsx";
 import { Login } from "./paginas/login.jsx";
 import { Contactanos } from "./paginas/contactanos.jsx";
+import { Usuarios } from "./paginas/Usuarios.jsx";
 import "./App.css";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/contacto" element={<Contactanos />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/usuarios" element={<Usuarios />} />
           
         </Routes>
       </Layout>
