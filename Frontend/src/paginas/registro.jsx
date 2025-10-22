@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Getdata, PostFormData } from "../servicios/Apis.js";
-import { Link } from "react-router-dom";
 import { Modal } from "../componentes/Modal.jsx";
 
 import "../css/registro.css";
