@@ -108,12 +108,12 @@ ALTER TABLE public.detalle_guia OWNER TO postgres;
 -- Name: guias; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.guias (
-    id_guias integer NOT NULL,
-    certificacion text,
-    disponiblidad boolean DEFAULT true,
-    id_usuario integer NOT NULL
-);
+-- CREATE TABLE public.guias (
+--     id_guias integer NOT NULL,
+--     certificacion text,
+--     disponiblidad boolean DEFAULT true,
+--     id_usuario integer NOT NULL
+-- );
 
 
 ALTER TABLE public.guias OWNER TO postgres;
@@ -144,10 +144,10 @@ ALTER SEQUENCE public.guias_id_guias_seq OWNED BY public.guias.id_guias;
 -- Name: idiomas_guia; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.idiomas_guia (
-    id_usuario integer,
-    idioma text
-);
+-- CREATE TABLE public.idiomas_guia (
+--     id_usuario integer,
+--     idioma text
+-- );
 
 
 ALTER TABLE public.idiomas_guia OWNER TO postgres;
@@ -506,6 +506,7 @@ COPY public.cargo (id_cargo, cargo) FROM stdin;
 2	guia
 3	artesano
 4	administrador
+5	Prueba
 \.
 
 
@@ -601,7 +602,7 @@ COPY public.usuarios (id_usuario, nombre, email, "contraseña", id_cargo, imagen
 -- Name: cargo_id_cargo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.cargo_id_cargo_seq', 4, true);
+SELECT pg_catalog.setval('public.cargo_id_cargo_seq', 5, true);
 
 
 --
