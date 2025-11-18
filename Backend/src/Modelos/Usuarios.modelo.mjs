@@ -38,9 +38,16 @@ export async function ObtenerUsuarios() {
   return rows;
 }
 export async function BuscarUsuarioPorEmail(email) {
-  const consulta = "SELECT * FROM usuarios WHERE email = $1";
+  // console.log("Buscando usuario por email:", email);
+  const consulta = `
+    SELECT u.id_usuario, u.nombre, u.email,u.contraseña, u.id_cargo, u.imagen_url, u.telefono, u.direccion, u.estado, 
+           c.cargo AS descripcion_cargo
+    FROM usuarios u
+    INNER JOIN cargo c ON u.id_cargo = c.id_cargo
+    WHERE u.email = $1
+  `;
   const { rows } = await pool.query(consulta, [email]);
-  console.log("Usuario encontrado por email:", rows[0]);
+  // console.log("Usuario encontrado por email:", rows[0]);
   if (rows === undefined || rows.length === 0) {
     return null;
   }
@@ -49,5 +56,5 @@ export async function BuscarUsuarioPorEmail(email) {
 export async function Comparacontraseñas(contraseña,contraseñahased){
   const consulta = "SELECT * FROM usuarios where contraseña = $1";
   const {Filas} = await pool.query(consulta, [contraseña,contraseñahased]);
-  console.log("Resultado de la comparacion de contraseñas", Filas[0]);
+  // console.log("Resultado de la comparacion de contraseñas", Filas[0]);
 }
