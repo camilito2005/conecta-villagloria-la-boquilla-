@@ -28,6 +28,7 @@ export function Registro() {
     formData.append("direccion", e.target.direccion.value);
     formData.append("email", e.target.email.value);
     formData.append("password", e.target.password.value);
+    formData.append("comfirm_password", e.target.comfirm_contraseña.value);
     formData.append("cargo", e.target.cargo.value);
     formData.append("foto", e.target.foto.files[0]); // importante
 
@@ -75,7 +76,7 @@ export function Registro() {
           type="text"
           id="nombre"
           name="nombre"
-          placeholder="Ingresa tu nombre"
+          placeholder="Ingresa tu nombre" required
         />
 
         <label htmlFor="identificacion">Identificación</label>
@@ -83,7 +84,7 @@ export function Registro() {
           type="number"
           id="identificacion"
           name="identificacion"
-          placeholder="Ingresa su numero de identificacion"
+          placeholder="Ingresa su numero de identificacion"required
         />
 
         <label htmlFor="telefono">Contacto</label>
@@ -91,7 +92,7 @@ export function Registro() {
           type="number"
           id="telefono"
           name="telefono"
-          placeholder="Ingresa su numero de telefono"
+          placeholder="Ingresa su numero de telefono"required
         />
 
         <label htmlFor="direccion">Direccion</label>
@@ -99,7 +100,7 @@ export function Registro() {
           type="text"
           id="direccion"
           name="direccion"
-          placeholder="Ingresa su direccion "
+          placeholder="Ingresa su direccion "required
         />
 
         <label htmlFor="email">Correo electrónico</label>
@@ -107,7 +108,7 @@ export function Registro() {
           type="email"
           id="email"
           name="email"
-          placeholder="ejemplo@correo.com"
+          placeholder="ejemplo@correo.com"required
         />
 
         <label htmlFor="contraseña">Contraseña</label>
@@ -115,7 +116,15 @@ export function Registro() {
           type="password"
           id="contraseña"
           name="password"
-          placeholder="********"
+          placeholder="********"required
+        />
+
+        <label htmlFor="contraseña">Comfirmar Contraseña</label>
+        <input
+          type="password"
+          id="comfirm_contraseña"
+          name="comfirm_contraseña"
+          placeholder="********"required
         />
 
         <label htmlFor="cargo">Selecciona tu rol</label>
