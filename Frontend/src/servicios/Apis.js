@@ -16,6 +16,7 @@ async function Fetchapi(accion, options = {}) {
         ...headers,
         ...options.headers,
       },
+       credentials: "include", // 👈 permite enviar cookies/sesiones
     });
 
     // Si el servidor responde con error (400, 401, etc.)
@@ -28,12 +29,23 @@ async function Fetchapi(accion, options = {}) {
 
     return await response.json();
 
-    return await response.json();
   } catch (error) {
     console.error("Error en apiFetch:", error);
-    throw error;
+    return {
+      showModal: true,
+      modal: {
+        title: "Error de conexión",
+        message: "No se pudo contactar con el servidor",
+        type: "error",
+      },
+    };
   }
 }
+  // catch (error) {
+  //   console.error("Error en apiFetch:", error);
+  //   throw error;
+  // }
+// }
 // Llamada GET para obtener datos
 export function Getdata(accion) {
   return Fetchapi(accion);
