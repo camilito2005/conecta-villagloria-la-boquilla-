@@ -30,6 +30,7 @@ coverage/
 # Archivos de build generados por Vite o React
 frontend/dist/
 frontend/node_modules/
+frontend/src/paginas/tablas.jsx
 
 # ==========================================
 # 🐳 Docker
