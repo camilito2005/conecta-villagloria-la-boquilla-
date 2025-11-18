@@ -35,6 +35,17 @@
   transition: border 0.2s ease;
 }
 
+.reservas-container input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
 .reservas-container input[type="date"]:focus,
 .reservas-container select:focus {
   border: 1px solid #1e3a8a;
