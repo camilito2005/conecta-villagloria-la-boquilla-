@@ -23,14 +23,8 @@ services:
       - ../Backend:/app
       - /app/node_modules
       - ../Backend/src/Recursos:/usr/src/app/src/Recursos
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: camilo
-      DB_NAME: conecta-con-villagloria
-      PORT: 3000
-      CHOKIDAR_USEPOLLING: true  # 👈 Esto ayuda a que nodemon detecte cambios
+    env_file:
+    - ../Backend/.env # 👈 Esto ayuda a que nodemon detecte cambios
     depends_on:
       - db
     command: ["npm", "run", "dev"]
