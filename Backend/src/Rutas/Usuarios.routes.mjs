@@ -3,13 +3,17 @@ import { upload } from "../Middlewares/upload.mjs";
 import { RegistrarUsuarios } from "../Controladores/Usuarios.controlador.mjs";
 import { ListarUsuarios } from "../Controladores/Usuarios.controlador.mjs";
 import { AutenticarUsuario } from "../Controladores/Usuarios.controlador.mjs";
+import { CerrarSesion } from "../Controladores/Usuarios.controlador.mjs";   
+import { VerificarToken } from "../Middlewares/Auth.mjs";
 
 const router = Router(); // esta variable nos permite crear rutas
 
 // router.post("/Registrarusuarios",RegistrarUsuarios);
 router.post("/Registrarusuarios", upload.single("foto"), RegistrarUsuarios);
-router.get("/Listarusuarios", ListarUsuarios);
+router.get("/Listarusuarios",VerificarToken, ListarUsuarios);
 router.post("/Login", AutenticarUsuario); // nueva ruta para autenticacion
+router.post("/verificar", VerificarToken);
+router.post("/logout", CerrarSesion);
 
 
 export default router; // exporta las rutas para usarlas en otros archivos  
