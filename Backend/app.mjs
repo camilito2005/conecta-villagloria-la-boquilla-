@@ -3,10 +3,12 @@ import dotenv from 'dotenv';// esta línea importa el paquete dotenv
 import cors from 'cors'; // esta línea importa el paquete cors lo cual permite compartir recursos entre diferentes orígenes
 import path from "path";
 import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
 
 import CargosRoutes from './src/Rutas/Cargos.routes.mjs'; // esta línea importa las rutas de usuarios
 import UsuariosRoutes from './src/Rutas/Usuarios.routes.mjs'; // esta línea importa las rutas de usuarios
 import TablasRoutes from './src/Rutas/Tablas.routes.mjs'; //
+import HorariosRoutes from './src/Rutas/Horarios.routes.mjs'; //
 
 dotenv.config();// esta línea carga las variables de entorno desde el archivo .env
 const app = express();// esta línea crea una instancia de una aplicación express
@@ -14,8 +16,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Servir la carpeta Recursos públicamente
-
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // la URL de tu frontend
+    credentials: true,               // ⬅️ necesario para enviar/recibir cookies
+  })
+);
 
 app.use(express.json());// esta línea permite que la aplicación pueda interpretar solicitudes con cuerpo en formato JSON
 app.use(express.urlencoded({ extended: true })); // Para formularios normales
@@ -24,6 +31,7 @@ app.use("/Recursos", express.static(path.join(__dirname, "src","/Recursos")));
 
 app.use('/api/cargos', CargosRoutes);// esta línea monta las rutas de usuarios en la ruta /cargos
 app.use('/api/usuarios', UsuariosRoutes);// esta línea monta las rutas de usuarios en la ruta /usuarios
+app.use("/api/horarios", HorariosRoutes);
 app.use("/api/tablas", TablasRoutes);
 
 
