@@ -1,51 +1,104 @@
 import "../css/perfil.css";
+import { Postdata } from "../servicios/Apis.js";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "../componentes/Modal.jsx";
 
 export function Perfil() {
+  const [usuario, setUsuario] = useState(null);
+  const [modalData, setModalData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verificarSesion = async () => {
+      const result = await Postdata("usuarios/verificar", { enviarJson: true });
+      // console.log("Respuesta verificación:", result);
+
+      if (result.showModal && result.modal) {
+        setModalData({
+          title: result.modal.title,
+          message: result.modal.message,
+          type: result.modal.type,
+        });
+
+        setTimeout(() => navigate("/login"), 3000);
+        return;
+      }
+
+      if (result.usuario) {
+        setUsuario(result.usuario);
+      }
+    };
+
+    verificarSesion();
+  }, []);
+
+  const cerrarSesion = async () => {
+  const result = await Postdata("usuarios/logout", {});
+  if (result.showModal) {
+    setModalData(result.modal);
+    setTimeout(() => navigate("/login"), 2000);
+  }
+};
+
+  // 🔹 Evitar errores cuando no hay usuario cargado
+  const fotourl = usuario?.foto
+    ? `http://localhost:3000${usuario.foto}`
+    : "/src/assets/canoas.jpg";
+  const nombre = usuario?.nombre || "Sin nombre";
+  const correo = usuario?.correo || "No disponible";
+  const contacto = usuario?.contacto || "No disponible";
+  const direccion = usuario?.direccion || "No disponible";
+  const cargo = usuario?.cargo || "No disponible";
+
   return (
     <div className="perfil-container">
-      {/* Cabecera del perfil */}
       <div className="perfil-header">
-        <img
-          src="/src/assets/Guia.jpg"
-          alt="Foto de perfil"
-        />
-        <h2>Camilo marrugo barrios</h2>
-        <p>Guía local certificado</p>
+        <img src={fotourl} alt="Foto de perfil" />
+        <h2>{nombre}</h2>
+        <p>{cargo}</p>
       </div>
 
-      {/* Información del usuario */}
       <div className="perfil-info">
         <div>
           <label>Nombre</label>
-          <p>Camilo</p>
+          <p>{nombre}</p>
         </div>
         <div>
           <label>Correo</label>
-          <p>Camilo@correo.com</p>
+          <p>{correo}</p>
         </div>
         <div>
-          <label>cargo</label>
-          <p>El fk admin</p>
+          <label>Cargo</label>
+          <p>{cargo}</p>
         </div>
         <div>
           <label>Teléfono</label>
-          <p>+57 300 123 4567</p>
+          <p>{contacto}</p>
         </div>
         <div>
-          <label>direccion</label>
-          <p>la boquilla</p>
+          <label>Dirección</label>
+          <p>{direccion}</p>
         </div>
         <div>
           <label>Idiomas</label>
-          <p>Español, Inglés</p>
+          <p>{"No disponible"}</p>
         </div>
       </div>
 
-      {/* Acciones */}
       <div className="perfil-actions">
         <button className="perfil-btn">Editar Perfil</button>
-        <button className="perfil-btn">Cerrar Sesión</button>
+        <button onClick={cerrarSesion} className="perfil-btn">Cerrar Sesión</button>
       </div>
+
+      {modalData && (
+        <Modal
+          title={modalData.title}
+          message={modalData.message}
+          type={modalData.type}
+          onClose={() => setModalData(null)}
+        />
+      )}
     </div>
   );
 }
