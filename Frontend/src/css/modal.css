@@ -20,7 +20,13 @@
     width: 100%;
     text-align: center;
 }
-.modal-title {
+.modal-title-error {
+    color: "#007bff";
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.modal-title-exit {
+    color: "#e61f40";
     font-size: 1.5em;
     margin-bottom: 10px;
 }
