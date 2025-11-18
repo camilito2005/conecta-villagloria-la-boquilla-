@@ -29,7 +29,6 @@ function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/ejercicio" element={<Tablas />} />
           <Route path="/agg_horarios" element={<Agg_horarios />} />
-          
         </Routes>
       </Layout>
     </Router>
