@@ -118,12 +118,22 @@ export function Layout({ children }) {
             )}
 
             {!haySesion && (
+              <>
+              <Link
+                to="/registro"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Registrar
+              </Link>
+              
               <Link
                 to="/login"
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
               >
                 Iniciar Sesión
               </Link>
+              </>
+              
             )}
           </nav>
         </div>
