@@ -1,0 +1,131 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.admin-usuario-container {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* ===== CARD SUPERIOR ===== */
+.admin-usuario-header {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+  
+}
+/* Avatar */
+.admin-avatar-letra {
+  width: 70px;
+  height: 70px;
+  background: #1e3a8a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 auto 1rem;
+}
+
+.admin-usuario-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #1f3c88;
+  margin-bottom: 15px;
+}
+
+.admin-usuario-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #1f3c88;
+  font-weight: bold;
+}
+
+.admin-usuario-header .rol {
+  color: #555;
+  margin-top: 5px;
+}
+
+/* ===== FORMULARIO ===== */
+.admin-usuario-form {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* ===== CAMPOS ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* ===== BOTONES ===== */
+.botones-acciones {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-guardar {
+  background: #1f3c88;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-eliminar {
+  background: #d9534f;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-guardar:hover {
+  background: #162c6e;
+}
+
+.btn-eliminar:hover {
+  background: #b4413f;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .admin-usuario-form {
+    grid-template-columns: 1fr;
+  }
+
+  .botones-acciones {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
