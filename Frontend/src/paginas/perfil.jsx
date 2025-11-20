@@ -2,6 +2,7 @@ import "../css/perfil.css";
 import { Postdata } from "../servicios/Apis.js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useVerificarSesion } from "../servicios/Auth.js";
 import { Modal } from "../componentes/Modal.jsx";
 
 export function Perfil() {
@@ -9,29 +10,7 @@ export function Perfil() {
   const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const verificarSesion = async () => {
-      const result = await Postdata("usuarios/verificar", { enviarJson: true });
-      // console.log("Respuesta verificación:", result);
-
-      if (result.showModal && result.modal) {
-        setModalData({
-          title: result.modal.title,
-          message: result.modal.message,
-          type: result.modal.type,
-        });
-
-        setTimeout(() => navigate("/login"), 3000);
-        return;
-      }
-
-      if (result.usuario) {
-        setUsuario(result.usuario);
-      }
-    };
-
-    verificarSesion();
-  }, []);
+  useVerificarSesion({ setUsuario, setModalData, navigate });
 
   const cerrarSesion = async () => {
   const result = await Postdata("usuarios/logout", {});
