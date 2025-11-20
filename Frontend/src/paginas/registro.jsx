@@ -76,15 +76,18 @@ export function Registro() {
           type="text"
           id="nombre"
           name="nombre"
-          placeholder="Ingresa tu nombre" required
+          placeholder="Ingresa tu nombre"
+          required
         />
 
-        <label htmlFor="identificacion">Identificación</label>
+        {/* <label htmlFor="identificacion">Identificación</label> */}
         <input
-          type="number"
+          type="hidden"
           id="identificacion"
           name="identificacion"
-          placeholder="Ingresa su numero de identificacion"required
+          placeholder="Ingresa su numero de identificacion"
+          value="123456789"
+          required
         />
 
         <label htmlFor="telefono">Contacto</label>
@@ -92,15 +95,18 @@ export function Registro() {
           type="number"
           id="telefono"
           name="telefono"
-          placeholder="Ingresa su numero de telefono"required
+          placeholder="Ingresa su numero de telefono"
+          required
         />
 
-        <label htmlFor="direccion">Direccion</label>
+        {/* <label htmlFor="direccion">Direccion</label> */}
         <input
-          type="text"
+          type="hidden"
           id="direccion"
           name="direccion"
-          placeholder="Ingresa su direccion "required
+          value="Villagloria"
+          placeholder="Ingresa su direccion "
+          required
         />
 
         <label htmlFor="email">Correo electrónico</label>
@@ -108,7 +114,8 @@ export function Registro() {
           type="email"
           id="email"
           name="email"
-          placeholder="ejemplo@correo.com"required
+          placeholder="ejemplo@correo.com"
+          required
         />
 
         <label htmlFor="contraseña">Contraseña</label>
@@ -116,7 +123,8 @@ export function Registro() {
           type="password"
           id="contraseña"
           name="password"
-          placeholder="********"required
+          placeholder="********"
+          required
         />
 
         <label htmlFor="contraseña">Comfirmar Contraseña</label>
@@ -124,16 +132,19 @@ export function Registro() {
           type="password"
           id="comfirm_contraseña"
           name="comfirm_contraseña"
-          placeholder="********"required
+          placeholder="********"
+          required
         />
 
         <label htmlFor="cargo">Selecciona tu rol</label>
         <select id="cargo" name="cargo">
-          {cargos.map((cargo) => (
-            <option key={cargo.id_cargo} value={cargo.id_cargo}>
-              {cargo.cargo}
-            </option>
-          ))}
+          {cargos
+            .filter((c) => c.cargo === "turista")
+            .map((cargo) => (
+              <option key={cargo.id_cargo} value={cargo.id_cargo}>
+                {cargo.cargo}
+              </option>
+            ))}
         </select>
 
         <label htmlFor="">Foto</label>
