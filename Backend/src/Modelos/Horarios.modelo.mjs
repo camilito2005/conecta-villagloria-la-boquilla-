@@ -24,7 +24,8 @@ export async function ObtenerHorarios() {
        u.nombre AS nombre_guia
 FROM horarios_disponibles h
 JOIN usuarios u ON u.id_usuario = h.id_guia
-WHERE h.disponible = true;
+WHERE h.disponible = true
+order by h.fecha, h.hora;
 
   `;
   const { rows } = await pool.query(consulta);
