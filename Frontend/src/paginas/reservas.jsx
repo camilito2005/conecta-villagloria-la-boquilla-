@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "../componentes/Modal.jsx";
-import { VerificarSesion } from "../servicios/Auth.js";
+import { useVerificarSesion } from "../servicios/Auth.js";
 import { Getdata } from "../servicios/Apis.js";
 import { useNavigate } from "react-router-dom";
 import "../css/tours.css";
@@ -14,25 +14,32 @@ export function ToursDisponibles() {
   const [usuario, setUsuario] = useState(null);
   const navigate = useNavigate();
 
-  VerificarSesion({ setUsuario, setModalData, navigate });
+  useVerificarSesion({ setUsuario, setModalData, navigate });
   // console.log("Usuario en tours disponibles:", usuario);
 
   const id_turista = usuario?.id;
 
   // Obtener los tours y horarios disponibles desde la API al cargar el componente
   useEffect(() => {
-    const Horarios_disponibles = async () => {
-      try {
-        const data = await Getdata("horarios/listar_horarios");
-        setTours(data);
-        console.log("Tours y horarios disponibles:", data);
-      } catch (error) {
-        console.error("Error al obtener los tours y horarios:", error);
-      }
-    };
+  const Horarios_disponibles = async () => {
+    try {
+      const data = await Getdata("horarios/listar_horarios");
 
-    Horarios_disponibles();
-  }, []);
+      if (Array.isArray(data)) {
+        setTours(data);
+      } else {
+        // console.warn("La API devolvió un objeto en vez de un array:", data);
+        setTours([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener los tours y horarios:", error);
+      setTours([]);
+    }
+  };
+
+  Horarios_disponibles();
+}, []);
+  
 
   // const reservar = () => {
   //   if (!selectedTour || !selectedHorario) {
@@ -76,7 +83,7 @@ export function ToursDisponibles() {
             <h3>Guia: {tour.nombre_guia}</h3>
             <p>Hora: {tour.hora}</p>
             <p>{tour.descripcion}</p>
-            <span className="precio">Precio: ${tour.precio} COP</span>
+            <span className="precio">Precio: ${new Intl.NumberFormat("es-CO").format(tour.precio)}COP</span>
           </div>
         ))}
       </div>
