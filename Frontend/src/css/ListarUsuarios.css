@@ -1,39 +1,4 @@
-/* 
-.usuarios-container{
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.usuarios-table{
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-.usuario-foto{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-.editar-btn{
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-}
-.eliminar-btn{
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-} */
- /* Contenedor principal */
+
 .usuarios-container {
   max-width: 1100px;
   margin: 3rem auto;
