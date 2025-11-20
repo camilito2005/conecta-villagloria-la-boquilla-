@@ -2,7 +2,7 @@ import "../css/reservas.css";
 import { Modal } from "../componentes/Modal.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { VerificarSesion } from "../servicios/Auth.js";
+import { useVerificarSesion } from "../servicios/Auth.js";
 import { Postdata } from "../servicios/Apis.js";
 
 export function Agg_horarios() {
@@ -10,7 +10,7 @@ export function Agg_horarios() {
   const [usuario, setUsuario] = useState(null);
   const navigate = useNavigate();
 
-  VerificarSesion({ setUsuario, setModalData, navigate });
+  useVerificarSesion({ setUsuario, setModalData, navigate });
     
   // const Cargo = usuario?.rol;
   const id_guia = usuario?.id;
@@ -33,6 +33,9 @@ export function Agg_horarios() {
         message: Respuesta.modal.message,
         type: Respuesta.modal.type,
       });
+      setTimeout(() => {
+          window.location.reload();
+        }, 5000);
       return;
     }
   };
@@ -55,7 +58,8 @@ export function Agg_horarios() {
               title={modalData.title}
               message={modalData.message}
               type={modalData.type}
-              onClose={() => setModalData(null)}
+              // quiero que cuando cierre el modal se actualice la pagina
+              onClose={() => setModalData(null)} 
             />
           )}
         </form>
