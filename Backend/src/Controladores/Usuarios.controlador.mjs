@@ -5,6 +5,9 @@ import {
 import { ObtenerUsuarios } from "../Modelos/Usuarios.modelo.mjs";
 import { CompararEmail } from "../Modelos/Usuarios.modelo.mjs";
 import { BuscarUsuarioPorEmail } from "../Modelos/Usuarios.modelo.mjs";
+import { BuscarUsuarioPorId } from "../Modelos/Usuarios.modelo.mjs";
+import {Actualizar_Perfil_Admin} from "../Modelos/Usuarios.modelo.mjs";
+import { EliminarUsuario } from "../Modelos/Usuarios.modelo.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -105,6 +108,18 @@ export async function RegistrarUsuarios(req, res) {
         },
       });
     }
+    // si el rol del usuario no es turista
+    if (NuevoUsuario.cargo != 1) {
+      return res.status(400).json({
+        error: "Rol de usuario inválido",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "El rol de usuario no es válido",
+          type: "error",
+        },
+      });
+    }
     // hasheo la contraseña antes de guardarla
     const salt = await bcrypt.genSalt(10);
     NuevoUsuario.password = await bcrypt.hash(NuevoUsuario.password, salt);
@@ -152,6 +167,112 @@ export async function ListarUsuarios(req, res) {
     res.status(500).json({ error: "Error al listar usuarios" });
   }
 }
+
+export async function PerfilAdmin(req, res) {
+  try {
+    const { usuarioId } = req.params; // Obtengo el ID del usuario desde los parámetros de la ruta
+
+    const DatosUsuario = await BuscarUsuarioPorId(usuarioId);
+    if (!DatosUsuario) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se encontró el usuario solicitado",
+          type: "error",
+        },
+      });
+    }
+    res.status(200).json(DatosUsuario);
+  } catch (error) {
+    console.error("Error en PerfilAdmin:", error);
+    res.status(500).json({
+      error: "Error al obtener el perfil del usuario",
+    });
+  }
+}
+
+export async function ActualizarPerfilAdmin(req, res) {
+  try {
+    const { usuarioId } = req.params; // Obtengo el ID del usuario desde los parámetros de la ruta
+    const { nombre, email, telefono, id_cargo } = req.body;
+
+    const DatosActualizados = {
+      nombre,
+      email,
+      telefono,
+      id_cargo,
+    };
+
+    const UsuarioActualizado = await Actualizar_Perfil_Admin(
+      usuarioId,
+      DatosActualizados
+    );
+    if (!UsuarioActualizado) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se encontró el usuario para actualizar",
+          type: "error",
+        },
+      });
+    }
+    if (UsuarioActualizado) {
+      return res.status(200).json({
+        mensaje: "Usuario actualizado correctamente",
+        showModal: true,
+        modal: {
+          title: "Éxito",
+          message: "El perfil del usuario ha sido actualizado",
+          type: "success",
+        },
+      });
+    }
+
+  } catch (error) {
+    console.error("Error en ActualizarPerfilAdmin:", error);
+    res.status(500).json({
+      error: "Error al actualizar el perfil del usuario",
+    });
+  }
+}
+
+export async function Eliminarusuario(req, res) {
+  try {
+    const { usuarioId } = req.params;
+    const UsuarioEliminado = await EliminarUsuario(usuarioId);
+    if (!UsuarioEliminado) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se encontró el usuario para eliminar",
+          type: "error",
+        },
+      });
+    }
+    if (UsuarioEliminado) {
+      return res.status(200).json({
+        mensaje: "Usuario eliminado correctamente",
+        showModal: true,
+        modal: {
+          title: "Éxito",
+          message: "El usuario ha sido eliminado",
+          type: "success",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error en Eliminarusuario:", error);
+    res.status(500).json({
+      error: "Error al eliminar el usuario",
+    });
+  }
+}
 // autenticacion y sesiones en nodejs
 // falta por implementar
 export async function AutenticarUsuario(req, res) {
@@ -194,15 +315,15 @@ export async function AutenticarUsuario(req, res) {
       // 🔑 Generar el token
       const token = jwt.sign(
         {
-          id: usuario.id_usuario, // 
-          nombre: usuario.nombre, // 
+          id: usuario.id_usuario, //
+          nombre: usuario.nombre, //
           rol: usuario.id_cargo,
-          cargo: usuario.descripcion_cargo,//
+          cargo: usuario.descripcion_cargo, //
           estado: usuario.estado,
-          correo: usuario.email,//
-          contacto: usuario.telefono,//
-          direccion: usuario.direccion,//
-          foto: usuario.imagen_url,//
+          correo: usuario.email, //
+          contacto: usuario.telefono, //
+          direccion: usuario.direccion, //
+          foto: usuario.imagen_url, //
         },
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRES_IN }
@@ -213,7 +334,6 @@ export async function AutenticarUsuario(req, res) {
         sameSite: "lax",
         maxAge: 2 * 60 * 60 * 1000, // 2 horas
       });
-
 
       // console.log("el token creado es; "+token);
     } else if (Comparar == false) {
