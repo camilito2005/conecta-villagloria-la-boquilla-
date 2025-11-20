@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Getdata } from "../servicios/Apis.js";
 import React from "react";
 import { Modal } from "../componentes/Modal.jsx";
+import { useNavigate } from "react-router-dom";
 import "../css/listarusuarios.css";
 
 export function Usuarios() {
-  const Ruta = "http://localhost:3000";
+  const navigate = useNavigate();
   const [modalData, setModalData] = useState(null); // estado para el modal
   const [usuarios, setUsuarios] = useState([]); // Estado para almacenar los usuarios obtenidos de la API
  useEffect(() => {
@@ -48,7 +49,12 @@ export function Usuarios() {
             <h3>{usuario.nombre}</h3>
             <p className="correo">{usuario.email}</p>
             <p className="rol">{usuario.descripcion_cargo}</p>
-            <button className="ver-btn">Ver perfil</button>
+            <button
+              className="ver-btn"
+              onClick={() => navigate(`/admin_usuario_perfil/${usuario.id_usuario}`)}
+            >
+              Ver perfil
+            </button>
           </div>
         ))}
       </div>
