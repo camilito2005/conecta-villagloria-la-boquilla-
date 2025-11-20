@@ -33,7 +33,7 @@ export async function RegistrarUsuario(NuevoUsuario) {
   return { id: rows[0].id, ...NuevoUsuario };// devuelvo el id del nuevo usuario junto con los demás datos
 }
 export async function ObtenerUsuarios() {
-  const consulta = "SELECT u.id_usuario,u.nombre,u.email,c.cargo AS descripcion_cargo,u.imagen_url,u.telefono,u.direccion,u.identificacion,u.estado FROM  public.usuarios u INNER JOIN public.cargo c ON u.id_cargo = c.id_cargo";
+  const consulta = "SELECT u.id_usuario,u.nombre,u.email,c.cargo AS descripcion_cargo,u.imagen_url,u.telefono,u.direccion,u.identificacion,u.estado FROM  public.usuarios u INNER JOIN public.cargo c ON u.id_cargo = c.id_cargo WHERE u.estado = 'activo' ";
   const { rows } = await pool.query(consulta);
   return rows;
 }
@@ -48,6 +48,54 @@ export async function BuscarUsuarioPorEmail(email) {
   `;
   const { rows } = await pool.query(consulta, [email]);
   // console.log("Usuario encontrado por email:", rows[0]);
+  if (rows === undefined || rows.length === 0) {
+    return null;
+  }
+  return rows[0];
+}
+
+export async function Actualizar_Perfil_Admin(usuarioId, DatosActualizados) {
+  try {
+    const consulta = `UPDATE usuarios
+                      SET nombre = $1,
+                          email = $2,
+                          telefono = $3,
+                          id_cargo = $4
+                      WHERE id_usuario = $5
+                      RETURNING id_usuario, nombre, email, telefono, id_cargo`;
+    const Valores = [
+      DatosActualizados.nombre,
+      DatosActualizados.email,
+      DatosActualizados.telefono,
+      DatosActualizados.id_cargo,
+      usuarioId,
+    ];
+    const { rows } = await pool.query(consulta, Valores);
+    return rows[0]; // Devuelve el usuario actualizado
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function EliminarUsuario(usuarioId) {
+  try {
+    const consulta = `UPDATE usuarios set estado = 'inactivo' WHERE id_usuario = $1 RETURNING id_usuario, nombre, email, estado`;
+    const { rows } = await pool.query(consulta, [usuarioId]);
+    return rows[0]; // Devuelve el usuario eliminado (inactivado)
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function BuscarUsuarioPorId(usuarioId) {
+  const consulta = `
+    SELECT u.id_usuario, u.nombre, u.email, u.id_cargo, u.imagen_url, u.telefono, u.direccion, u.estado, 
+           c.cargo AS descripcion_cargo
+    FROM usuarios u
+    INNER JOIN cargo c ON u.id_cargo = c.id_cargo
+    WHERE u.id_usuario = $1
+  `;
+  const { rows } = await pool.query(consulta, [usuarioId]);
   if (rows === undefined || rows.length === 0) {
     return null;
   }
