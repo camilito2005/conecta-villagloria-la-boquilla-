@@ -9,6 +9,7 @@ import CargosRoutes from './src/Rutas/Cargos.routes.mjs'; // esta línea importa
 import UsuariosRoutes from './src/Rutas/Usuarios.routes.mjs'; // esta línea importa las rutas de usuarios
 import TablasRoutes from './src/Rutas/Tablas.routes.mjs'; //
 import HorariosRoutes from './src/Rutas/Horarios.routes.mjs'; //
+import ReservasRoutes from './src/Rutas/Reservas.routes.mjs'; 
 
 dotenv.config();// esta línea carga las variables de entorno desde el archivo .env
 const app = express();// esta línea crea una instancia de una aplicación express
@@ -33,6 +34,8 @@ app.use('/api/cargos', CargosRoutes);// esta línea monta las rutas de usuarios 
 app.use('/api/usuarios', UsuariosRoutes);// esta línea monta las rutas de usuarios en la ruta /usuarios
 app.use("/api/horarios", HorariosRoutes);
 app.use("/api/tablas", TablasRoutes);
+app.use("/api/reservas", ReservasRoutes);
+
 
 
 
