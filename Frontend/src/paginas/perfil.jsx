@@ -55,14 +55,6 @@ export function Perfil() {
           <label>Teléfono</label>
           <p>{contacto}</p>
         </div>
-        <div>
-          <label>Dirección</label>
-          <p>{direccion}</p>
-        </div>
-        <div>
-          <label>Idiomas</label>
-          <p>{"No disponible"}</p>
-        </div>
       </div>
 
       <div className="perfil-actions">
