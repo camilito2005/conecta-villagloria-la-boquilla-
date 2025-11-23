@@ -82,14 +82,19 @@ export function Layout({ children }) {
               <>
               {esGuia && (
                 <>
-                  <Link to="/" className="hover:text-blue-600 transition">
-                    Mis Paseos
+                  <Link to="/usuarios/tours" className="hover:text-blue-600 transition">
+                    Mis tours
                   </Link>
 
                   <Link to="/agg_horarios" className="hover:text-blue-600 transition">
                     Horarios disponibles
                   </Link>
                 </>
+            )}
+            {esTurista && (
+              <Link to="/usuarios/mis_reservas" className="hover:text-blue-600 transition">
+                Mis reservas
+              </Link>
             )}
                 <Link to="/reservas" className="hover:text-blue-600 transition">
                   Reservar
