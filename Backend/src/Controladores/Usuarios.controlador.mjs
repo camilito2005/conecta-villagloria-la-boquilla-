@@ -1,13 +1,14 @@
 import {
-  CompararIdentificacion,
-  RegistrarUsuario,
+  RegistrarUsuario
 } from "../Modelos/Usuarios.modelo.mjs";
 import { ObtenerUsuarios } from "../Modelos/Usuarios.modelo.mjs";
 import { CompararEmail } from "../Modelos/Usuarios.modelo.mjs";
 import { BuscarUsuarioPorEmail } from "../Modelos/Usuarios.modelo.mjs";
 import { BuscarUsuarioPorId } from "../Modelos/Usuarios.modelo.mjs";
-import {Actualizar_Perfil_Admin} from "../Modelos/Usuarios.modelo.mjs";
-import { EliminarUsuario } from "../Modelos/Usuarios.modelo.mjs";
+import { Actualizar_Perfil_Admin } from "../Modelos/Usuarios.modelo.mjs";
+import { Inactivarusuarios } from "../Modelos/Usuarios.modelo.mjs";
+import { ObtenerUsuariosInactivos } from "../Modelos/Usuarios.modelo.mjs";
+import { RestaurarUsuarios } from "../Modelos/Usuarios.modelo.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -31,9 +32,7 @@ export async function RegistrarUsuarios(req, res) {
       !NuevoUsuario.password ||
       !NuevoUsuario.comfirm_password ||
       !NuevoUsuario.cargo ||
-      !NuevoUsuario.telefono ||
-      !NuevoUsuario.direccion ||
-      !NuevoUsuario.identificacion
+      !NuevoUsuario.telefono 
     ) {
       return res.status(400).json({
         error: "Faltan datos obligatorios",
@@ -45,31 +44,7 @@ export async function RegistrarUsuarios(req, res) {
         },
       });
     }
-
-    const identificacion = NuevoUsuario.identificacion;
-    if (String(identificacion).length > 10) {
-      return res.status(400).json({
-        error: "identificación incorrecta",
-        showModal: true,
-        modal: {
-          title: "problema de Identificación",
-          message: "La Identificación supera el maximo de 10 dijitos",
-          type: "error",
-        },
-      });
-    }
-    const existeIdentificacion = await CompararIdentificacion(identificacion);
-    if (existeIdentificacion == true) {
-      return res.status(400).json({
-        error: "La identificación ya está en uso",
-        showModal: true,
-        modal: {
-          title: "Identificación inválida",
-          message: "La identificación ya está en uso",
-          type: "error",
-        },
-      });
-    }
+    
     const email = NuevoUsuario.email;
     const existeEmail = await CompararEmail(email);
     if (existeEmail == true) {
@@ -231,7 +206,6 @@ export async function ActualizarPerfilAdmin(req, res) {
         },
       });
     }
-
   } catch (error) {
     console.error("Error en ActualizarPerfilAdmin:", error);
     res.status(500).json({
@@ -240,10 +214,10 @@ export async function ActualizarPerfilAdmin(req, res) {
   }
 }
 
-export async function Eliminarusuario(req, res) {
+export async function Inactivarusuario(req, res) {
   try {
     const { usuarioId } = req.params;
-    const UsuarioEliminado = await EliminarUsuario(usuarioId);
+    const UsuarioEliminado = await Inactivarusuarios(usuarioId);
     if (!UsuarioEliminado) {
       return res.status(404).json({
         error: "Usuario no encontrado",
@@ -273,6 +247,7 @@ export async function Eliminarusuario(req, res) {
     });
   }
 }
+
 // autenticacion y sesiones en nodejs
 // falta por implementar
 export async function AutenticarUsuario(req, res) {
@@ -301,6 +276,18 @@ export async function AutenticarUsuario(req, res) {
         modal: {
           title: "Error",
           message: "No hay ningún usuario con el email ingresado",
+          type: "error",
+        },
+      });
+    }
+    // si el estado del usuario es = "inactivo" no puede iniciar sesion
+    if (usuario.estado === "inactivo") {
+      return res.status(403).json({
+        error: "Usuario inactivo",
+        showModal: true,
+        modal: {
+          title: "Usuario inactivo",
+          message: "El usuario está inactivo. Contacta al administrador.",
           type: "error",
         },
       });
@@ -387,6 +374,61 @@ export async function CerrarSesion(req, res) {
         message: "No se pudo cerrar la sesión.",
         type: "error",
       },
+    });
+  }
+}
+
+export async function UsuariosInactivos(req, res) {
+  try {
+    const usuariosInactivos = await ObtenerUsuariosInactivos();
+    if (!usuariosInactivos || usuariosInactivos.length === 0) {
+      return res.status(404).json({
+        error: "No hay usuarios inactivos",
+        showModal: true,
+        modal: {
+          title: "Sin usuarios inactivos",
+          message: "No se encontraron usuarios inactivos",
+          type: "error",
+        },
+      });
+    }
+    res.status(200).json(usuariosInactivos);
+  } catch (error) {
+    console.error("Error en UsuariosInactivos:", error);
+    res.status(500).json({ error: "Error al obtener usuarios inactivos" });
+  }
+}
+
+export async function RestaurarUsuario(req, res) {
+  try {
+    const { id } = req.params;
+    const usuarioRestaurado = await RestaurarUsuarios(id);
+    if (!usuarioRestaurado) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se encontró el usuario para restaurar",
+          type: "error",
+        },
+      });
+    }
+    if (usuarioRestaurado) {
+      return res.status(200).json({
+        mensaje: "Usuario restaurado correctamente",
+        showModal: true,
+        modal: {
+          title: "Éxito",
+          message: "El usuario ha sido restaurado",
+          type: "success",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error en RestaurarUsuario:", error);
+    res.status(500).json({
+      error: "Error al restaurar el usuario",
     });
   }
 }
