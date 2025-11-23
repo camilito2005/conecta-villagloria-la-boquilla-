@@ -1,0 +1,63 @@
+.panel-turista {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.panel-turista h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.reservas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item-reserva {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  border-left: 6px solid #007bff;
+}
+
+.item-reserva h3 {
+  margin: 0 0 8px 0;
+}
+
+.estado {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  background: #ffdd57;
+  color: #7a5a00;
+}
+
+.estado-confirmada {
+  background: #28a745;
+  color: white;
+}
+
+.estado-cancelada {
+  background: #dc3545;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .item-reserva {
+    padding: 12px;
+  }
+
+  .estado {
+    font-size: 13px;
+  }
+}
