@@ -54,7 +54,7 @@ useEffect(() => {
   const restaurarUsuario = async (id) => {
     try {
       const Respuesta = await Postdata(`usuarios/restaurar/${id}`, {});
-      console.log("Respuesta de restaurar usuario:", Respuesta);
+      // console.log("Respuesta de restaurar usuario:", Respuesta);
       
       if (Respuesta.showModal) {
         setModalData({
