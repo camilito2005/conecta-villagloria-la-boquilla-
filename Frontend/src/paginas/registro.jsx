@@ -30,13 +30,13 @@ export function Registro() {
     formData.append("cargo", e.target.cargo.value);
     formData.append("foto", e.target.foto.files[0]); // importante
 
-    console.log("Nuevo usuario:", formData);
+    // console.log("Nuevo usuario:", formData);
 
     try {
       const result = await PostFormData("usuarios/Registrarusuarios", formData);
-      console.log("Usuario registrado:", result);
+      // console.log("Usuario registrado:", result);
       // teniendo en cuenta que el usuario se registro correctamente, o si hubo algun error en controlador puse un objeto con showModal: true para mostrar el modal
-      console.log("el modal", result.showModal);
+      // console.log("el modal", result.showModal);
       if (result.showModal) {
         setModalData({
           title: result.modal.title,
