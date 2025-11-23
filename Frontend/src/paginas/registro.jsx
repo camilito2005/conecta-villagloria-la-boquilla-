@@ -23,9 +23,7 @@ export function Registro() {
 
     const formData = new FormData();
     formData.append("nombre", e.target.nombre.value);
-    formData.append("identificacion", e.target.identificacion.value);
     formData.append("telefono", e.target.telefono.value);
-    formData.append("direccion", e.target.direccion.value);
     formData.append("email", e.target.email.value);
     formData.append("password", e.target.password.value);
     formData.append("comfirm_password", e.target.comfirm_contraseña.value);
@@ -80,15 +78,6 @@ export function Registro() {
           required
         />
 
-        {/* <label htmlFor="identificacion">Identificación</label> */}
-        <input
-          type="hidden"
-          id="identificacion"
-          name="identificacion"
-          placeholder="Ingresa su numero de identificacion"
-          value="123456789"
-          required
-        />
 
         <label htmlFor="telefono">Contacto</label>
         <input
