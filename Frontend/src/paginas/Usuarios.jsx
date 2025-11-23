@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Getdata } from "../servicios/Apis.js";
-import React from "react";
 import { Modal } from "../componentes/Modal.jsx";
 import { useNavigate } from "react-router-dom";
 import "../css/listarusuarios.css";
