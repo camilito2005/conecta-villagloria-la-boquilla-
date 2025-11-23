@@ -12,6 +12,10 @@ import { Contactanos } from "./paginas/contactanos.jsx";
 import { Usuarios } from "./paginas/Usuarios.jsx";
 import { Tablas } from "./paginas/tablas.jsx";
 import { Agg_horarios } from "./paginas/Horarios.jsx";
+import {AdminUsuariosInactivos} from "./paginas/AdminUsuariosInactivos.jsx";
+import {GuiaReservasPendientes} from "./paginas/GuiaReservas.jsx";
+import {TuristaEstadoReserva} from "./paginas/TuristaReserva.jsx";
+
 import "./App.css";
 
 function App() {
@@ -31,6 +35,9 @@ function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/ejercicio" element={<Tablas />} />
           <Route path="/agg_horarios" element={<Agg_horarios />} />
+          <Route path="/usuarios/inactivos" element={<AdminUsuariosInactivos />} />
+          <Route path="/usuarios/tours" element={<GuiaReservasPendientes />} />
+          <Route path="/usuarios/mis_reservas" element={<TuristaEstadoReserva />} />
         </Routes>
       </Layout>
     </Router>
