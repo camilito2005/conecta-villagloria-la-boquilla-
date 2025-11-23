@@ -1,0 +1,110 @@
+.inactivos-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.inactivos-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.cargando,
+.sin-usuarios {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 40px;
+  color: #666;
+}
+
+/* Grid responsive */
+.usuarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.usuario-card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.2s;
+}
+
+.usuario-card:hover {
+  transform: translateY(-3px);
+}
+
+.foto {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.email {
+  color: #666;
+  font-size: 14px;
+}
+
+.rol {
+  font-weight: bold;
+  margin: 6px 0;
+  color: #444;
+}
+
+.acciones {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Botones */
+.btn-restaurar {
+  background: #2ecc71;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-restaurar:hover {
+  background: #27ae60;
+}
+
+.btn-eliminar {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-eliminar:hover {
+  background: #c0392b;
+}
+
+/* Responsive ajustes */
+@media (max-width: 480px) {
+  .usuario-card {
+    padding: 15px;
+  }
+
+  .acciones {
+    flex-direction: column;
+  }
+
+  .acciones button {
+    width: 100%;
+  }
+}
