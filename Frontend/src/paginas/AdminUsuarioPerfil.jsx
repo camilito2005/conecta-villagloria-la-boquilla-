@@ -86,7 +86,7 @@ export function AdminUsuarioPerfil() {
     const confirmar = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (confirmar) {
       // Aquí iría la lógica para eliminar el usuario
-      const Respuesta = await Postdata(`usuarios/Eliminarusuario/${usuarioId}`);
+      const Respuesta = await Postdata(`usuarios/Inactivarusuario/${usuarioId}`);
       // console.log("Respuesta al eliminar el usuario:", Respuesta);
       if (Respuesta.showModal) {
         setModalData({
@@ -162,7 +162,7 @@ export function AdminUsuarioPerfil() {
             Guardar Cambios
           </button>
           <button type="button" onClick={EliminarU} className="btn-eliminar">
-            Eliminar Usuario
+            Inactivar Usuario
           </button>
         </div>
       </form>
