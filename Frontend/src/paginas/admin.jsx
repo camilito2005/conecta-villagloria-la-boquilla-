@@ -21,6 +21,13 @@ export function Admin() {
           </div>
         </Link>
 
+        <Link to="/usuarios/inactivos" className="hover:text-blue-600 transition">
+          <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
+            <h3 className="font-semibold text-lg text-blue-700">Usuarios Inactivos</h3>
+            <p className="text-gray-600">Gestión de usuarios inactivos</p>
+          </div>
+        </Link>
+
         <Link to="/artesanias" className="hover:text-blue-600 transition">
           <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
             <h3 className="font-semibold text-lg text-blue-700">Artesanias</h3>
