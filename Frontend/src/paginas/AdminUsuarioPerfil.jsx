@@ -71,7 +71,7 @@ export function AdminUsuarioPerfil() {
         });
         setTimeout(() => {
           window.location.reload();
-        }, 5000);
+        }, 3000);
       return;
       }
 
@@ -96,7 +96,7 @@ export function AdminUsuarioPerfil() {
         });
         setTimeout(() => {
           navigate("/usuarios");
-        }, 5000);
+        }, 3000);
       return;
     }
   }
@@ -111,7 +111,7 @@ export function AdminUsuarioPerfil() {
       
       {/* Card Superior */}
       <div className="admin-usuario-header">
-        {usuarioPerfil.imagen_url !== "/Recursos/null" ? (
+        {usuarioPerfil.imagen_url !== null ? (
           // ✔ Si hay foto → mostrar imagen
           <img
             src={`http://localhost:3000${usuarioPerfil.imagen_url}`}
