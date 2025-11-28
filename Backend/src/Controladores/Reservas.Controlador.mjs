@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import { CrearNuevasReservas } from "../Modelos/Reservas.Modelo.mjs";
-import {ObtenerReservasPendientesPorGuia} from "../Modelos/Reservas.Modelo.mjs";
+import { ObtenerReservasPendientesPorGuia } from "../Modelos/Reservas.Modelo.mjs";
+import { ActualizarEstados } from "../Modelos/Reservas.Modelo.mjs";
+import { json } from "express";
 
 dotenv.config();
 
@@ -65,13 +67,13 @@ export async function CrearReserva(req, res) {
 }
 
 export async function ObtenerReservasPendientesGuia(req, res) {
-  console.log("Entrando a ObtenerReservasPendientesGuia");
+  // console.log("Entrando a ObtenerReservasPendientesGuia");
   try {
     const { id_guia } = req.params;
-    console.log("ID del guía recibido:", id_guia);
+    // console.log("ID del guía recibido:", id_guia);
     if (!id_guia) {
-      return res.status(400).json({ 
-        mensaje: "Faltan datos" ,
+      return res.status(400).json({
+        mensaje: "Faltan datos",
         reserva: nuevaReserva,
         showModal: true,
         modal: {
@@ -79,17 +81,17 @@ export async function ObtenerReservasPendientesGuia(req, res) {
           message: "Falta el id del guía",
           type: "success",
         },
-       });
+      });
     }
     const reservas = await ObtenerReservasPendientesPorGuia(id_guia);
-    console.log("Reservas pendientes obtenidas:", reservas);
+    // console.log("Reservas pendientes obtenidas:", reservas);
     if (!reservas || reservas.length === 0) {
       return res
         .status(404)
         .json({ mensaje: "No hay reservas pendientes para este guía" });
     }
     if (reservas) {
-      return res.status(200).json({ reservas});
+      return res.status(200).json({ reservas });
     }
   } catch (error) {
     console.error("Error en ObtenerReservasPendientesGuia:", error);
@@ -99,6 +101,72 @@ export async function ObtenerReservasPendientesGuia(req, res) {
       modal: {
         title: "Error",
         message: "Hubo un problema al obtener las reservas pendientes",
+        type: "error",
+      },
+    });
+  }
+}
+
+export async function ObtenerReservasPendientesTurista(req,res){
+  console.log("llega aqui");
+  try {
+    const { id_turista } = req.params;
+    console.log("id del turista: ",id_turista);
+  } catch (error) {
+    console.error("ocurrio un error",error)
+  }
+}
+
+export async function ActualizarEstado(req, res) {
+  try {
+    const { id_reserva } = req.params;
+    const { estado, id_horario } = req.body;
+    if (!id_reserva || !estado || !id_horario) {
+      return res.status(400).json({
+        mensaje: "Faltan datos",
+        showModal: true,
+        modal: {
+          title: "error",
+          message: "Faltan datos",
+          type: "success",
+        },
+      });
+    }
+
+    const Respuesta = await ActualizarEstados(id_reserva, id_horario, estado);
+    if (!Respuesta) {
+      return res.status(500).json({
+        mensaje: "error",
+        showModal: true,
+        modal: {
+          title: "error",
+          message: "error",
+          type: "error",
+        },
+      });
+    }
+
+    if (Respuesta) {
+      return res.status(200).json({
+        mensaje: "estado actualizado exitosamente",
+        showModal: true,
+        // horario,
+        // reserva,
+        modal: {
+          title: "EXITO",
+          message: "el estado a sido actualizado",
+          type: "succes",
+        },
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      mensaje: "Error al actualizar estado",
+      showModal: true,
+      modal: {
+        title: "Error",
+        message: "Hubo un problema al actualizar el estado",
         type: "error",
       },
     });

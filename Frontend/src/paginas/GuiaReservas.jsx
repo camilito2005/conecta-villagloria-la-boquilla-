@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Getdata, Putdata } from "../servicios/Apis.js";
+import { Getdata, Putdata, Postdata } from "../servicios/Apis.js";
 import { Modal } from "../componentes/Modal.jsx";
 import { useVerificarSesion } from "../servicios/Auth.js";
 import { useNavigate } from "react-router-dom";
@@ -23,18 +23,26 @@ export function GuiaReservasPendientes() {
       fecha_horario: r.fecha_horario.split("T")[0],
     }));
     setReservas(Array.isArray(formateados) ? formateados : []);
-
-
   };
 
   useEffect(() => {
     if (usuario?.id) cargarReservas();
   }, [usuario]);
 
-  const actualizarEstado = async (id_reserva, nuevoEstado) => {
+  const actualizarEstado = async (id_reserva,id_horario, nuevoEstado) => {
+
     const res = await Putdata(`reservas/actualizar_estado/${id_reserva}`, {
       estado: nuevoEstado,
+      id_horario,
     });
+    console.log("respuesta del servidor", res);
+    if (res.showModal) {
+      setModalData({
+        title: res.modal.title,
+        message: res.modal.message,
+        type: res.modal.type,
+      });
+    }
 
     if (res) cargarReservas();
   };
@@ -49,18 +57,49 @@ export function GuiaReservasPendientes() {
         {reservas.map((r) => (
           <div key={r.id_reserva} className="reserva-card">
             <h3>{r.fecha_horario}</h3>
-            <p><strong>Hora:</strong> {r.hora_horario}</p>
-            <p><strong>Precio:</strong> ${new Intl.NumberFormat("es-CO").format(r.precio_horario)}</p>
-            <p><strong>Turista:</strong> {r.nombre_turista}</p>
-            <p><strong>Correo:</strong> {r.email_turista}</p>
-            <p><strong>Teléfono:</strong> {r.telefono_turista}</p>
-            <p><strong>Comentarios:</strong> {r.comentarios || "Sin comentarios"}</p>
-            <p className="estado"><strong>Estado:</strong> {r.estado}</p>
-            <p><strong>Fecha creación:</strong> {new Date(r.fecha_creacion).toLocaleString()}</p>
+            <p>
+              <strong>Hora:</strong> {r.hora_horario}
+            </p>
+            <p>
+              <strong>Precio:</strong> $
+              {new Intl.NumberFormat("es-CO").format(r.precio_horario)}
+            </p>
+            <p>
+              <strong>Turista:</strong> {r.nombre_turista}
+            </p>
+            <p>
+              <strong>Correo:</strong> {r.email_turista}
+            </p>
+            <p>
+              <strong>Teléfono:</strong> {r.telefono_turista}
+            </p>
+            <p>
+              <strong>Comentarios:</strong> {r.comentarios || "Sin comentarios"}
+            </p>
+            {/* <p>
+              <strong>Id del horario :</strong> {r.id_horario || "Sin comentarios"}
+            </p> */}
+            <p >
+              <strong>Estado:</strong> {r.estado}
+            </p>
+            <p>
+              <strong>Fecha creación:</strong>{" "}
+              {new Date(r.fecha_creacion).toLocaleString()}
+            </p>
 
             <div className="acciones">
-              <button className="btn-confirmar" onClick={() => actualizarEstado(r.id_reserva, "confirmada")}>Confirmar</button>
-              <button className="btn-cancelar" onClick={() => actualizarEstado(r.id_reserva, "cancelada")}>Cancelar</button>
+              <button
+                className="btn-confirmar"
+                onClick={() => actualizarEstado(r.id_reserva,r.id_horario, "confirmada")}
+              >
+                Confirmar
+              </button>
+              <button
+                className="btn-cancelar"
+                onClick={() => actualizarEstado(r.id_reserva,r.id_horario, "cancelada")}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         ))}

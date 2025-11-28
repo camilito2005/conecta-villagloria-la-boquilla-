@@ -58,11 +58,15 @@ useEffect(() => {
       
       if (Respuesta.showModal) {
         setModalData({
-          title: result.modal.title,
-          message: result.modal.message,
-          type: result.modal.type,
+          title: Respuesta.modal.title,
+          message: Respuesta.modal.message,
+          type: Respuesta.modal.type,
         });
-        setUsuarios((prev) => prev.filter((u) => u.id_usuario !== id));
+        setUsuarios((prev) => prev.filter((u) => u.id_usuario !== id)); // Quitar de la lista de inactivos
+        // luego de 5 segundos de haber mostrado el modal, enviar a la vista del admin
+        setTimeout(() => {
+           navigate("/admin");
+        }, 3000);
 
       }
       // Quitar de la lista de inactivos
@@ -76,8 +80,15 @@ useEffect(() => {
     if (!confirmacion) return;
 
     try {
-      await Deletedata(`usuarios/eliminar_def/${id}`);
+      const Respuesta = await Deletedata(`usuarios/eliminar_usuario/${id}`);
       setUsuarios((prev) => prev.filter((u) => u.id_usuario !== id));
+      if (Respuesta.showModal) {
+        setModalData({
+          title: Respuesta.modal.title,
+          message: Respuesta.modal.message,
+          type: Respuesta.modal.type,
+        });
+      }
     } catch (error) {
       console.error("Error eliminando usuario", error);
     }
@@ -95,7 +106,7 @@ useEffect(() => {
         <div className="usuarios-grid">
           {usuarios.map((u) => (
             <div key={u.id_usuario} className="usuario-card">
-              {u.imagen_url !== "/Recursos/null" ? (
+              {u.imagen_url !== null ? (
                 // ✔ Si hay foto → mostrar imagen
                 <img
                   src={`http://localhost:3000${u.imagen_url}`}

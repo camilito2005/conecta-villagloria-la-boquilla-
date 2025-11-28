@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Getdata, PostFormData } from "../servicios/Apis.js";
+import { Getdata, Postdata } from "../servicios/Apis.js";
 import { Modal } from "../componentes/Modal.jsx";
 
 import "../css/registro.css";
@@ -21,20 +21,22 @@ export function Registro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("nombre", e.target.nombre.value);
-    formData.append("telefono", e.target.telefono.value);
-    formData.append("email", e.target.email.value);
-    formData.append("password", e.target.password.value);
-    formData.append("comfirm_password", e.target.comfirm_contraseña.value);
-    formData.append("cargo", e.target.cargo.value);
-    formData.append("foto", e.target.foto.files[0]); // importante
+    const nuevoUsuario = {
+      nombre: e.target.nombre.value,
+      telefono: e.target.telefono.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      comfirm_password: e.target.comfirm_contraseña.value,
+      cargo: e.target.cargo.value,
+    };
 
-    // console.log("Nuevo usuario:", formData);
+    // formData.append("foto", e.target.foto.files[0]); // importante
+
+    console.log("Nuevo usuario:", nuevoUsuario);
 
     try {
-      const result = await PostFormData("usuarios/Registrarusuarios", formData);
-      // console.log("Usuario registrado:", result);
+      const result = await Postdata("usuarios/Registrarusuarios", nuevoUsuario);
+      console.log("Usuario registrado:", result);
       // teniendo en cuenta que el usuario se registro correctamente, o si hubo algun error en controlador puse un objeto con showModal: true para mostrar el modal
       // console.log("el modal", result.showModal);
       if (result.showModal) {
@@ -77,7 +79,6 @@ export function Registro() {
           placeholder="Ingresa tu nombre"
           required
         />
-
 
         <label htmlFor="telefono">Contacto</label>
         <input
@@ -135,9 +136,6 @@ export function Registro() {
               </option>
             ))}
         </select>
-
-        <label htmlFor="">Foto</label>
-        <input type="file" id="foto" name="foto" accept="image/*" />
 
         <button type="submit" className="registro-btn">
           Registrarse

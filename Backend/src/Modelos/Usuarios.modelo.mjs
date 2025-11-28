@@ -1,7 +1,7 @@
 import pool from "../Configuracion/Conexion.mjs";
 
 export async function CompararEmail(email) {
-  const consulta = "SELECT * FROM usuarios WHERE email = $1";
+  const consulta = `SELECT * FROM usuarios WHERE email = $1 LIMIT 1`;
   const { rows } = await pool.query(consulta, [email]);
   return rows.length > 0;
 }
@@ -71,7 +71,7 @@ export async function Actualizar_Perfil_Admin(usuarioId, DatosActualizados) {
 
 export async function BuscarUsuarioPorId(usuarioId) {
   const consulta = `
-    SELECT u.id_usuario, u.nombre, u.email, u.id_cargo, u.imagen_url, u.telefono, u.direccion, u.estado, 
+    SELECT u.id_usuario, u.nombre, u.email,u.contraseña, u.id_cargo, u.imagen_url, u.telefono, u.direccion, u.estado, 
            c.cargo AS descripcion_cargo
     FROM usuarios u
     INNER JOIN cargo c ON u.id_cargo = c.id_cargo
@@ -113,3 +113,62 @@ export async function RestaurarUsuarios(id) {
     throw error;
   }
 }
+
+export async function EliminarUsuarios(id) {
+  try {
+    const consulta = `DELETE FROM usuarios WHERE id_usuario = $1 RETURNING id_usuario, nombre, email`;
+    const { rows } = await pool.query(consulta, [id]);
+    return rows[0]; // Devuelve el usuario eliminado
+  } catch (error) {
+    throw error;
+  }
+}
+
+/**
+ * Actualiza los campos permitidos de un usuario (para su propio perfil).
+ * Retorna el usuario actualizado (SELECT luego del UPDATE para devolver descripción cargo, etc).
+ */
+export async function Actualizar_Mi_Perfil(usuarioId, datos) {
+  try {
+
+    const updateQuery = `
+      UPDATE usuarios
+      SET nombre = $1, email = $2, telefono = $3, direccion = $4
+      WHERE id_usuario = $5
+      RETURNING id_usuario
+    `;
+    
+    const vals = [
+      datos.nombre,
+      datos.email,
+      datos.telefono || null,
+      datos.direccion || null,
+      usuarioId
+    ];
+
+    const { rows } = await pool.query(updateQuery, vals);
+
+    if (!rows[0]) {
+      return null;
+    }
+
+    const fetchQuery = `
+      SELECT u.id_usuario, u.nombre, u.email, u.id_cargo, 
+             u.imagen_url, u.telefono, u.direccion, u.estado,
+             c.cargo AS descripcion_cargo
+      FROM usuarios u
+      LEFT JOIN cargo c ON c.id_cargo = u.id_cargo
+      WHERE u.id_usuario = $1
+      LIMIT 1
+    `;
+
+    const { rows: r2 } = await pool.query(fetchQuery, [usuarioId]);
+
+    return r2[0];
+
+  } catch (error) {
+    console.error("Error Actualizar_Mi_Perfil:", error);
+    throw error;
+  }
+}
+

@@ -26,6 +26,7 @@ export function Agg_horarios() {
     const Datos = { fecha, hora, id_guia, precio };
 
     const Respuesta = await Postdata("horarios/agg_horarios", Datos);
+    console.log("horarios:",Respuesta)
 
     if (Respuesta.showModal) {
       setModalData({
@@ -35,7 +36,7 @@ export function Agg_horarios() {
       });
       setTimeout(() => {
           window.location.reload();
-        }, 5000);
+        }, 3000);
       return;
     }
   };

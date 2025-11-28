@@ -41,11 +41,11 @@ export function Login() {
         // Redirección según el rol del usuario
         const rol = Respuesta.usuario?.id_cargo;
         if (rol === 1) {
-          navigate("/marketplace");
+          navigate("/perfil");
         } else if (rol === 2) {
-          navigate("/reservas");
+          navigate("/perfil");
         } else if (rol === 3) {
-          navigate("/contacto");
+          navigate("/perfil");
         } else if (rol === 4) {
           navigate("/admin");
         } else {

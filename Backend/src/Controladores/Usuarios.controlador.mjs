@@ -1,6 +1,4 @@
-import {
-  RegistrarUsuario
-} from "../Modelos/Usuarios.modelo.mjs";
+import { RegistrarUsuario } from "../Modelos/Usuarios.modelo.mjs";
 import { ObtenerUsuarios } from "../Modelos/Usuarios.modelo.mjs";
 import { CompararEmail } from "../Modelos/Usuarios.modelo.mjs";
 import { BuscarUsuarioPorEmail } from "../Modelos/Usuarios.modelo.mjs";
@@ -9,6 +7,8 @@ import { Actualizar_Perfil_Admin } from "../Modelos/Usuarios.modelo.mjs";
 import { Inactivarusuarios } from "../Modelos/Usuarios.modelo.mjs";
 import { ObtenerUsuariosInactivos } from "../Modelos/Usuarios.modelo.mjs";
 import { RestaurarUsuarios } from "../Modelos/Usuarios.modelo.mjs";
+import { EliminarUsuarios } from "../Modelos/Usuarios.modelo.mjs";
+import {Actualizar_Mi_Perfil} from "../Modelos/Usuarios.modelo.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -18,38 +18,59 @@ dotenv.config();
 export async function RegistrarUsuarios(req, res) {
   try {
     const NuevoUsuario = req.body;
-    NuevoUsuario.foto = req.file ? req.file.filename : null;
-    // verifico que la foto no se ningun archivo extraño
+    console.log("datos de usuario", NuevoUsuario);
+    // console.log("datos de usuario",req.body);
 
-    const rutaImagen = `/Recursos/${NuevoUsuario.foto}`; // Ruta relativa para almacenar en la base de datos
-    NuevoUsuario.foto = rutaImagen;
+    // -------------------------------
+    // MANEJO DE IMAGEN OPCIONAL
+    // -------------------------------
+    // if (req.file) {
+    //   // aseguramos que multer filtró bien la imagen
+    //   const nombreSeguro = req.file.filename;
 
-    // Validar que todos los campos estén presentes
+    //   // prevenir intentos de path traversal
+    //   if (nombreSeguro.includes("..")) {
+    //     return res.status(400).json({
+    //       showModal: true,
+    //       modal: {
+    //         title: "Archivo inválido",
+    //         message: "El nombre de la imagen no es válido",
+    //         type: "error",
+    //       },
+    //     });
+    //   }
 
+    //   NuevoUsuario.foto = `/Recursos/${nombreSeguro}`;
+    // } else {
+    //   // si no hay imagen, queda null
+    //   NuevoUsuario.foto = null;
+    // }
+
+    // -------------------------------
+    // VALIDACIÓN GENERAL DE CAMPOS
+    // -------------------------------
     if (
       !NuevoUsuario.nombre ||
       !NuevoUsuario.email ||
       !NuevoUsuario.password ||
       !NuevoUsuario.comfirm_password ||
       !NuevoUsuario.cargo ||
-      !NuevoUsuario.telefono 
+      !NuevoUsuario.telefono
     ) {
       return res.status(400).json({
-        error: "Faltan datos obligatorios",
         showModal: true,
         modal: {
           title: "Datos incompletos",
-          message: "Faltan datos obligatorios",
+          message: "Debe completar todos los campos obligatorios",
           type: "error",
         },
       });
     }
-    
-    const email = NuevoUsuario.email;
-    const existeEmail = await CompararEmail(email);
-    if (existeEmail == true) {
+
+    // Email repetido
+    const existeEmail = await CompararEmail(NuevoUsuario.email);
+    if (existeEmail) {
       return res.status(400).json({
-        error: "El email ya está en uso",
         showModal: true,
         modal: {
           title: "Email inválido",
@@ -58,23 +79,22 @@ export async function RegistrarUsuarios(req, res) {
         },
       });
     }
-    const contraseña = NuevoUsuario.password.trim();
-    if (contraseña.length < 6) {
+
+    // Contraseña muy corta
+    if (NuevoUsuario.password.trim().length < 6) {
       return res.status(400).json({
-        error: "La contraseña debe tener al menos 6 caracteres",
         showModal: true,
         modal: {
           title: "Contraseña inválida",
-          message: "La contraseña debe tener al menos 6 caracteres",
+          message: "Debe tener al menos 6 caracteres",
           type: "error",
         },
       });
     }
-    const confirmar_contraseña = NuevoUsuario.comfirm_password.trim();
 
-    if (confirmar_contraseña !== NuevoUsuario.password) {
+    // Contraseñas diferentes
+    if (NuevoUsuario.comfirm_password.trim() !== NuevoUsuario.password) {
       return res.status(400).json({
-        error: "Las contraseñas no coinciden",
         showModal: true,
         modal: {
           title: "Contraseña inválida",
@@ -83,10 +103,10 @@ export async function RegistrarUsuarios(req, res) {
         },
       });
     }
-    // si el rol del usuario no es turista
+
+    // Rol permitido (solo turista)
     if (NuevoUsuario.cargo != 1) {
       return res.status(400).json({
-        error: "Rol de usuario inválido",
         showModal: true,
         modal: {
           title: "Error",
@@ -95,22 +115,25 @@ export async function RegistrarUsuarios(req, res) {
         },
       });
     }
-    // hasheo la contraseña antes de guardarla
+
+    // -------------------------------
+    // HASHEAR CONTRASEÑA
+    // -------------------------------
     const salt = await bcrypt.genSalt(10);
     NuevoUsuario.password = await bcrypt.hash(NuevoUsuario.password, salt);
 
+    // -------------------------------
+    // GUARDAR EN BD
+    // -------------------------------
     const resultado = await RegistrarUsuario(NuevoUsuario);
-    // console.log("Resultado de la inserción:", resultado);
 
-    res.status(201).json({
+    return res.status(201).json({
       mensaje: "Usuario registrado correctamente",
-      usuario: NuevoUsuario,
+      usuario: resultado,
     });
-    return resultado.showModal;
   } catch (error) {
-    console.error("Error en Registrarusuarios:", error);
-    res.status(500).json({
-      error: "Error al registrar usuario",
+    console.error("Error en RegistrarUsuarios:", error);
+    return res.status(500).json({
       showModal: true,
       modal: {
         title: "Error del servidor",
@@ -235,7 +258,7 @@ export async function Inactivarusuario(req, res) {
         showModal: true,
         modal: {
           title: "Éxito",
-          message: "El usuario ha sido eliminado",
+          message: "El usuario ha sido inactivado",
           type: "success",
         },
       });
@@ -430,5 +453,177 @@ export async function RestaurarUsuario(req, res) {
     res.status(500).json({
       error: "Error al restaurar el usuario",
     });
+  }
+}
+
+export async function EliminarUsuario(req, res) {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({
+        error: "Faltan datos",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "Falta el id del usuario",
+          type: "error",
+        },
+      });
+    }
+    const usuarioEliminado = await EliminarUsuarios(id);
+    if (!usuarioEliminado) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se encontró el usuario para eliminar",
+          type: "error",
+        },
+      });
+    }
+    if (usuarioEliminado) {
+      return res.status(200).json({
+        mensaje: "Usuario eliminado correctamente",
+        showModal: true,
+        modal: {
+          title: "Éxito",
+          message: "El usuario ha sido eliminado definitivamente",
+          type: "success",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error en EliminarUsuario:", error);
+    res.status(500).json({
+      error: "Error al eliminar el usuario",
+      showModal: true,
+      modal: {
+        title: "Error",
+        message: "Hubo un problema al eliminar el usuario",
+        type: "error",
+      },
+    });
+  }
+}
+
+export async function ActualizarMiPerfil(req, res) {
+  try {
+    const usuarioId = req.usuario.id; // lo inyecta VerificarToken
+    const { nombre, email, telefono, direccion } = req.body;
+
+    if (!nombre || !email) {
+      return res.status(400).json({
+        showModal: true,
+        modal: {
+          title: "Datos incompletos",
+          message: "Nombre y email son obligatorios",
+          type: "error",
+        },
+      });
+    }
+
+    // Si el email cambió, comprobar unicidad
+    const usuarioActual = await BuscarUsuarioPorId(usuarioId);
+    if (!usuarioActual) {
+      return res.status(404).json({
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "Usuario no encontrado",
+          type: "error",
+        },
+      });
+    }
+
+    if (email !== usuarioActual.email) {
+      const emailEnUso = await CompararEmail(email);
+      if (emailEnUso) {
+        return res.status(400).json({
+          showModal: true,
+          modal: {
+            title: "Email inválido",
+            message: "El email ya está en uso",
+            type: "error",
+          },
+        });
+      }
+    }
+
+    // Ejecutar actualización en DB
+    const actualizado = await Actualizar_Mi_Perfil(usuarioId, {
+      nombre,
+      email,
+      telefono,
+      direccion,
+    });
+    console.log("resultado del modelo de ActualizarMiPerfil",actualizado);
+
+    if (!actualizado) {
+      return res.status(500).json({
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "No se pudo actualizar el usuario",
+          type: "error",
+        },
+      });
+    }
+    
+
+    // Re-crea el token con la información nueva (para que cookie tenga los datos actualizados)
+    const tokenPayload = {
+      id: actualizado.id_usuario,
+      nombre: actualizado.nombre,
+      rol: actualizado.id_cargo,
+      cargo: actualizado.descripcion_cargo || actualizado.cargo || null,
+      estado: actualizado.estado,
+      correo: actualizado.email,
+      contacto: actualizado.telefono,
+      direccion: actualizado.direccion,
+      foto: actualizado.imagen_url || null,
+    };
+
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN || "2h",
+    });
+
+    // Setea cookie actualizada (misma configuración que en el login)
+    res.cookie("token_acceso", token, {
+      httpOnly: true,
+      secure: false, // true en producción con HTTPS
+      sameSite: "lax",
+      maxAge: 2 * 60 * 60 * 1000,
+    });
+
+    // Devuelve los datos actualizados (útil para front inmediatamente)
+    return res.status(200).json({
+      showModal: true,
+      modal: 
+      { title: "Éxito", 
+        message: "Perfil actualizado", 
+        type: "success" },
+      usuario: actualizado,
+    });
+  } catch (error) {
+    console.error("Error en ActualizarMiPerfil:", error);
+    return res.status(500).json({
+      showModal: true,
+      modal: { title: "Error", message: "Error interno", type: "error" },
+    });
+  }
+}
+
+export async function ObtenerMiPerfil(req, res) {
+  try {
+    const usuarioId = req.usuario.id;
+    const usuario = await BuscarUsuarioPorId(usuarioId);
+    if (!usuario) {
+      return res.status(404).json({ showModal: true, modal: { title: "Error", message: "Usuario no encontrado", type: "error" }});
+    }
+    return res.json({ usuario });
+  } catch (error) {
+    console.error("Error en ObtenerMiPerfil:", error);
+    res.status(500).json({ showModal: true, modal: { title: "Error", message: "Error interno", type: "error" }});
   }
 }

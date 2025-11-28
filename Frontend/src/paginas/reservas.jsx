@@ -22,9 +22,6 @@ export function ToursDisponibles() {
     const cargarHorarios = async () => {
       try {
         const data = await Getdata("horarios/listar_horarios");
-        
-
-        // console.log("Tours y horarios obtenidos:", data);
 
         if (Array.isArray(data)) {
           // Convertir fecha ISO a formato YYYY-MM-DD
@@ -60,7 +57,6 @@ export function ToursDisponibles() {
     };
 
     const res = await Postdata(`reservas/crear_reserva`, reserva);
-    // console.log("Respuesta reserva:", res);
     if (res.showModal) {
       setModalData(res.modal);
     }
