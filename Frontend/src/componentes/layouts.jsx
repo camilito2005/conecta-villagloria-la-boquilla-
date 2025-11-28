@@ -92,19 +92,26 @@ export function Layout({ children }) {
                 </>
             )}
             {esTurista && (
+             <> 
               <Link to="/usuarios/mis_reservas" className="hover:text-blue-600 transition">
                 Mis reservas
               </Link>
-            )}
+            
                 <Link to="/reservas" className="hover:text-blue-600 transition">
                   Reservar
                 </Link>
+                
+                </>
+                )}
+                {esTurista || esAdmin || esArtesano && (
                 <Link
                   to="/marketplace"
                   className="hover:text-blue-600 transition"
                 >
                   Marketplace
                 </Link>
+                )}
+
                 <Link to="/perfil" className="hover:text-blue-600 transition">
                   Perfil
                 </Link>
