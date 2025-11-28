@@ -76,7 +76,7 @@ export function Putdata(accion, data) {
 
 // llamada DELETE para eliminar datos en la API
 export function Deletedata(accion, id) {
-  return Fetchapi(`${accion}&id=${id}`, {
+  return Fetchapi(`${accion}`, {
     method: "DELETE",
   });
 }
