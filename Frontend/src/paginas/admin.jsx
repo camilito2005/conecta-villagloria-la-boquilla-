@@ -34,10 +34,28 @@ export function Admin() {
             <p className="text-gray-600">Gestion de artesanias</p>
           </div>
         </Link>
-        <Link to="/reservas" className="hover:text-blue-600 transition">
+        <Link to="/usuarios/Toures" className="hover:text-blue-600 transition">
           <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
             <h3 className="font-semibold text-lg text-blue-700">Reservas</h3>
             <p className="text-gray-600">Control de experiencias</p>
+          </div>
+        </Link>
+
+        <Link to="/usuarios/Roles" className="hover:text-blue-600 transition">
+          <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
+            <h3 className="font-semibold text-lg text-blue-700">
+              Cargos
+            </h3>
+            <p className="text-gray-600">Gestion de cargos y roles</p>
+          </div>
+        </Link>
+
+        <Link to="/usuarios/categorias" className="hover:text-blue-600 transition">
+          <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
+            <h3 className="font-semibold text-lg text-blue-700">
+              Categorias
+            </h3>
+            <p className="text-gray-600">Gestion de Categorias y subcategorias</p>
           </div>
         </Link>
 
