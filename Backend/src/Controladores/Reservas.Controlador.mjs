@@ -1,6 +1,10 @@
 import dotenv from "dotenv";
 import { CrearNuevasReservas } from "../Modelos/Reservas.Modelo.mjs";
-import { ObtenerReservasPendientesPorGuia } from "../Modelos/Reservas.Modelo.mjs";
+import {
+  ObtenerReservasPendientesPorGuia,
+  ReservasTurista,
+  HistorialReservasTurista,
+} from "../Modelos/Reservas.Modelo.mjs";
 import { ActualizarEstados } from "../Modelos/Reservas.Modelo.mjs";
 import { json } from "express";
 
@@ -20,10 +24,7 @@ export async function CrearReserva(req, res) {
         },
       });
     }
-    // CREO LA FECHA ACTUAL PERO EN MI ZONA HORARIA QUE ES BOGOTA, ACTUALMENTE SON 11:30 AM
-    // const fecha = new Date().toLocaleString("es-CO", {
-    //   timeZone: "America/Bogota",
-    // });
+
     const fecha = new Date();
     const comentarios = "de momento no hay comentarios";
     const estado = "pendiente";
@@ -74,7 +75,6 @@ export async function ObtenerReservasPendientesGuia(req, res) {
     if (!id_guia) {
       return res.status(400).json({
         mensaje: "Faltan datos",
-        reserva: nuevaReserva,
         showModal: true,
         modal: {
           title: "Éxito",
@@ -86,9 +86,15 @@ export async function ObtenerReservasPendientesGuia(req, res) {
     const reservas = await ObtenerReservasPendientesPorGuia(id_guia);
     // console.log("Reservas pendientes obtenidas:", reservas);
     if (!reservas || reservas.length === 0) {
-      return res
-        .status(404)
-        .json({ mensaje: "No hay reservas pendientes para este guía" });
+      return res.status(404).json({
+        mensaje: "No hay reservas pendientes",
+        showModal: true,
+        modal: {
+          title: "Pendientes",
+          message: "No se encontraron reservas pendientes",
+          type: "success",
+        },
+      });
     }
     if (reservas) {
       return res.status(200).json({ reservas });
@@ -107,13 +113,72 @@ export async function ObtenerReservasPendientesGuia(req, res) {
   }
 }
 
-export async function ObtenerReservasPendientesTurista(req,res){
-  console.log("llega aqui");
+export async function ObtenerReservasPendientesTurista(req, res) {
   try {
     const { id_turista } = req.params;
-    console.log("id del turista: ",id_turista);
+    if (!id_turista) {
+      return res.status(400).json({
+        mensaje: "Faltan datos",
+        reserva: nuevaReserva,
+        showModal: true,
+        modal: {
+          title: "Éxito",
+          message: "Falta el id del guía",
+          type: "success",
+        },
+      });
+    }
+
+    const ReservasTuristas = await ReservasTurista(id_turista);
+
+    if (ReservasTuristas.length === 0) {
+      return res.json([]); // sin modal (normal)
+    }
+
+    return res.json(ReservasTuristas);
   } catch (error) {
-    console.error("ocurrio un error",error)
+    console.error("ocurrio un error", error);
+    return res.status(500).json({
+      showModal: true,
+      modal: {
+        title: "Error del servidor",
+        message: "Ocurrió un error al procesar la solicitud.",
+        type: "error",
+      },
+    });
+  }
+}
+
+// Controlador para historial completo
+export async function ObtenerHistorialReservas(req, res) {
+  try {
+    const { id_turista } = req.params;
+
+    if (!id_turista) {
+      return res.status(400).json({
+        mensaje: "ID del turista es requerido",
+        showModal: true,
+        modal: {
+          title: "Error",
+          message: "Falta el ID del turista",
+          type: "error",
+        },
+      });
+    }
+
+    const historial = await HistorialReservasTurista(id_turista);
+
+    return res.json(historial); // Puede estar vacío sin problema
+  } catch (error) {
+    console.error("Error al obtener historial:", error);
+    return res.status(500).json({
+      showModal: true,
+      modal: {
+        title: "Error del servidor",
+        message: "Ocurrió un error al cargar el historial.",
+        type: "error",
+      },
+    });
   }
 }
 
