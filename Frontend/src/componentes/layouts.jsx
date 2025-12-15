@@ -57,6 +57,8 @@ export function Layout({ children }) {
   const esGuia = usuario?.rol === 2;
   const esArtesano = usuario?.rol === 3;
   const esAdmin = usuario?.rol === 4;
+  const esRestaurantero = usuario?.rol === 5;
+  const esSuperadmin = usuario?.rol === 13;
  
 
   // Estado de sesión Si hay usuario, hay sesión.
@@ -82,6 +84,10 @@ export function Layout({ children }) {
               <>
               {esGuia && (
                 <>
+                <Link to="/usuarios/Toures" className="hover:text-blue-600 transition">
+                    Toures
+                  </Link>
+
                   <Link to="/usuarios/tours" className="hover:text-blue-600 transition">
                     Mis tours
                   </Link>
@@ -115,7 +121,7 @@ export function Layout({ children }) {
                 <Link to="/perfil" className="hover:text-blue-600 transition">
                   Perfil
                 </Link>
-                {esAdmin && (
+                {esAdmin || esSuperadmin  && (
                   <Link to="/admin" className="hover:text-blue-600 transition">
                     Admin
                   </Link>
