@@ -1,63 +1,167 @@
+/* Contenedor principal */
 .panel-turista {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .panel-turista h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 24px;
+  font-weight: 600;
 }
 
+/* Pestañas */
+.tabs-reservas {
+  display: flex;
+  gap: 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.tab {
+  padding: 12px 32px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #64748b;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.tab:hover {
+  color: #1e40af;
+  background-color: #f1f5f9;
+}
+
+.tab-activa {
+  color: #1e40af;
+  border-bottom-color: #1e40af;
+  font-weight: 600;
+  background-color: #f8fafc;
+}
+
+/* Lista de reservas */
 .reservas-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
+.sin-reservas {
+  text-align: center;
+  padding: 60px 20px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* Item de reserva */
 .item-reserva {
   background: white;
-  padding: 16px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  border-left: 6px solid #007bff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.item-reserva h3 {
-  margin: 0 0 8px 0;
+.item-reserva:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
 }
 
+/* Header de la reserva */
+.reserva-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.reserva-fecha {
+  font-size: 18px;
+  color: #1e293b;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Estados */
 .estado {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 10px;
-  font-weight: bold;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .estado-pendiente {
-  background: #ffdd57;
-  color: #7a5a00;
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .estado-confirmada {
-  background: #28a745;
-  color: white;
+  background-color: #d1fae5;
+  color: #065f46;
 }
 
 .estado-cancelada {
-  background: #dc3545;
-  color: white;
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Detalles de la reserva */
+.reserva-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reserva-detalles p {
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+}
+
+.reserva-detalles strong {
+  color: #1e293b;
+  font-weight: 600;
+  margin-right: 8px;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .item-reserva {
-    padding: 12px;
+@media (max-width: 768px) {
+  .panel-turista {
+    margin: 20px auto;
+    padding: 0 16px;
   }
 
-  .estado {
-    font-size: 13px;
+  .panel-turista h2 {
+    font-size: 24px;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .reserva-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .reserva-fecha {
+    font-size: 16px;
+  }
+
+  .item-reserva {
+    padding: 16px;
   }
 }
