@@ -45,19 +45,9 @@ export function Registro() {
           message: result.modal.message,
           type: result.modal.type,
         });
-      } else {
-        // Si el registro fue exitoso, muestra un modal de éxito y redirige
-        setModalData({
-          title: "Usuario registrado",
-          message: `El usuario ${formData.get(
-            "nombre"
-          )} fue registrado correctamente.`,
-          type: "success",
-        });
-        // redirige después de unos segundos
         setTimeout(() => {
           window.location.href = "/login";
-        }, 2500);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error al registrar usuario:", error);
@@ -129,7 +119,7 @@ export function Registro() {
         <label htmlFor="cargo">Selecciona tu rol</label>
         <select id="cargo" name="cargo">
           {cargos
-            .filter((c) => c.cargo === "turista")
+            .filter((c) => c.cargo === "Turista")
             .map((cargo) => (
               <option key={cargo.id_cargo} value={cargo.id_cargo}>
                 {cargo.cargo}
