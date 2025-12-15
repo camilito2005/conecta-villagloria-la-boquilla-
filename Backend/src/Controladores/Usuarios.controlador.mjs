@@ -128,6 +128,12 @@ export async function RegistrarUsuarios(req, res) {
     const resultado = await RegistrarUsuario(NuevoUsuario);
 
     return res.status(201).json({
+       showModal: true,
+        modal: {
+          title: "exito",
+          message: "Usuario creado extosamente",
+          type: "success",
+        },
       mensaje: "Usuario registrado correctamente",
       usuario: resultado,
     });
