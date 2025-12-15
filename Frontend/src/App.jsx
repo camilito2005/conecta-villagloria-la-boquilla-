@@ -15,6 +15,9 @@ import { Agg_horarios } from "./paginas/Horarios.jsx";
 import {AdminUsuariosInactivos} from "./paginas/AdminUsuariosInactivos.jsx";
 import {GuiaReservasPendientes} from "./paginas/GuiaReservas.jsx";
 import {TuristaEstadoReserva} from "./paginas/TuristaReserva.jsx";
+import {GuiaGestionHorarios} from "./paginas/Toures.jsx";
+import {Roles} from "./paginas/Roles.jsx";
+import { GestionCategorias } from "./paginas/CategoriasySub.jsx";
 
 import "./App.css";
 
@@ -37,7 +40,11 @@ function App() {
           <Route path="/agg_horarios" element={<Agg_horarios />} />
           <Route path="/usuarios/inactivos" element={<AdminUsuariosInactivos />} />
           <Route path="/usuarios/tours" element={<GuiaReservasPendientes />} />
+          <Route path="/usuarios/Roles" element={<Roles />} />
           <Route path="/usuarios/mis_reservas" element={<TuristaEstadoReserva />} />
+          <Route path="/usuarios/Toures" element={<GuiaGestionHorarios />} />
+          <Route path="/usuarios/categorias" element={<GestionCategorias />} />
+
         </Routes>
       </Layout>
     </Router>
