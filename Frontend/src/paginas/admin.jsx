@@ -77,12 +77,12 @@ export function Admin() {
           </div>
         </Link>
 
-        <Link to="/ejercicio" className="hover:text-blue-600 transition">
+        {/* <Link to="/ejercicio" className="hover:text-blue-600 transition">
           <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
             <h3 className="font-semibold text-lg text-blue-700">Tablas</h3>
             <p className="text-gray-600">ejercicios</p>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </section>
   );
