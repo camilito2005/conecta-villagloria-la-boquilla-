@@ -74,6 +74,14 @@ export function Putdata(accion, data) {
   });
 }
 
+// llamada Put pero sin json, para editar formularios con archivos (fotos, pdf, etc)
+export function PutFormData(accion, data) {
+  return Fetchapi(accion, {
+    method: "PUT",
+    body: data, // sin JSON.stringify
+  });
+}
+
 // llamada DELETE para eliminar datos en la API
 export function Deletedata(accion, id) {
   return Fetchapi(`${accion}`, {
