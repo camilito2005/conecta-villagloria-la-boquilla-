@@ -3,21 +3,23 @@ import { Layout } from "./componentes/layouts.jsx";
 import { Inicio } from "./paginas/inicio.jsx";
 import { Admin } from "./paginas/admin.jsx";
 import { ToursDisponibles } from "./paginas/reservas.jsx";
-import { Marketplace } from "./paginas/catalogo.jsx";
+import { Catalogo } from "./paginas/catalogo.jsx";
 import { Perfil } from "./paginas/perfil.jsx";
-import {AdminUsuarioPerfil} from "./paginas/AdminUsuarioPerfil.jsx";
+import { AdminUsuarioPerfil } from "./paginas/AdminUsuarioPerfil.jsx";
 import { Registro } from "./paginas/registro.jsx";
 import { Login } from "./paginas/login.jsx";
 import { Contactanos } from "./paginas/contactanos.jsx";
 import { Usuarios } from "./paginas/Usuarios.jsx";
 import { Tablas } from "./paginas/tablas.jsx";
 import { Agg_horarios } from "./paginas/Horarios.jsx";
-import {AdminUsuariosInactivos} from "./paginas/AdminUsuariosInactivos.jsx";
-import {GuiaReservasPendientes} from "./paginas/GuiaReservas.jsx";
-import {TuristaEstadoReserva} from "./paginas/TuristaReserva.jsx";
-import {GuiaGestionHorarios} from "./paginas/Toures.jsx";
-import {Roles} from "./paginas/Roles.jsx";
+import { AdminUsuariosInactivos } from "./paginas/AdminUsuariosInactivos.jsx";
+import { GuiaReservasPendientes } from "./paginas/GuiaReservas.jsx";
+import { TuristaEstadoReserva } from "./paginas/TuristaReserva.jsx";
+import { GuiaGestionHorarios } from "./paginas/Toures.jsx";
+import { Roles } from "./paginas/Roles.jsx";
 import { GestionCategorias } from "./paginas/CategoriasySub.jsx";
+import { GestionProductos } from "./paginas/Productos.jsx";
+import { GestionNegocios } from "./paginas/Negocios.jsx";
 
 import "./App.css";
 
@@ -28,7 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/reservas" element={<ToursDisponibles />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/marketplace" element={<Catalogo />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/admin_usuario_perfil/:usuarioId" element={<AdminUsuarioPerfil />} />
           <Route path="/admin" element={<Admin />} />
@@ -44,6 +46,8 @@ function App() {
           <Route path="/usuarios/mis_reservas" element={<TuristaEstadoReserva />} />
           <Route path="/usuarios/Toures" element={<GuiaGestionHorarios />} />
           <Route path="/usuarios/categorias" element={<GestionCategorias />} />
+          <Route path="/Productos" element={<GestionProductos />} />
+          <Route path="/Negocios" element={<GestionNegocios />} />
 
         </Routes>
       </Layout>
