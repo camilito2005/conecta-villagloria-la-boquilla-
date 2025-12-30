@@ -48,9 +48,6 @@ app.use("/api/productos", Productosrouter);
 app.use("/api/negocios", Negociosrouter);
 
 
-
-
-
 app.listen(process.env.PORT || 3000, () => // esta línea inicia el servidor en el puerto especificado en las variables de entorno o en el puerto 3000 si no está especificado
   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`)
 );
