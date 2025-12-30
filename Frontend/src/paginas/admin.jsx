@@ -34,6 +34,7 @@ export function Admin() {
             <p className="text-gray-600">Gestion de artesanias</p>
           </div>
         </Link>
+        
         <Link to="/usuarios/Toures" className="hover:text-blue-600 transition">
           <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
             <h3 className="font-semibold text-lg text-blue-700">Reservas</h3>
@@ -76,13 +77,6 @@ export function Admin() {
             <p className="text-gray-600">Ajustes generales</p>
           </div>
         </Link>
-
-        {/* <Link to="/ejercicio" className="hover:text-blue-600 transition">
-          <div className="bg-white shadow rounded-xl p-6 text-center hover:shadow-lg transition cursor-pointer">
-            <h3 className="font-semibold text-lg text-blue-700">Tablas</h3>
-            <p className="text-gray-600">ejercicios</p>
-          </div>
-        </Link> */}
       </div>
     </section>
   );
