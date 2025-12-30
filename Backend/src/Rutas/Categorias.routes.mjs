@@ -5,6 +5,7 @@ import { ListarCategorias,CrearCategoria,EditarCategoria,EliminarCategoria } fro
 const router = Router(); // esta variable nos permite crear rutas
 
 router.get("/", VerificarToken, ListarCategorias);
+router.get("/publicas", ListarCategorias);
 router.post("/Crear", VerificarToken, CrearCategoria);
 router.put("/Editar/:id", VerificarToken, EditarCategoria);
 router.delete("/Eliminar/:id", VerificarToken, EliminarCategoria);
