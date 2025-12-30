@@ -5,6 +5,7 @@ import {ObtenerSubcategorias,Crear_subcategoria,Modificar_subcategorias,Eliminar
 const router = Router(); // esta variable nos permite crear rutas
 
 router.get("/", VerificarToken, ObtenerSubcategorias);
+router.get("/publicas", ObtenerSubcategorias);
 router.post("/Crear", VerificarToken, Crear_subcategoria);
 router.put("/Editar/:id", VerificarToken, Modificar_subcategorias);
 router.delete("/Eliminar/:id", VerificarToken, Eliminar_subcategoria);
