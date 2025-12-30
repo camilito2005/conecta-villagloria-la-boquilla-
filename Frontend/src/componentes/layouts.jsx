@@ -117,6 +117,17 @@ export function Layout({ children }) {
                   Marketplace
                 </Link>
                 )}
+                {esArtesano && (
+                  <>
+                <Link to="/Productos" className="hover:text-blue-600 transition">
+                  Mis Artesanias
+                  </Link>
+                  
+                  <Link to="/Negocios" className="hover:text-blue-600 transition">
+                   Negocios
+                  </Link>
+                  </>
+                  )}
 
                 <Link to="/perfil" className="hover:text-blue-600 transition">
                   Perfil
