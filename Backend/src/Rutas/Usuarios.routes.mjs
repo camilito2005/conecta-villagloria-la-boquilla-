@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { upload } from "../Middlewares/upload.mjs";
+// import { upload } from "../Middlewares/upload.mjs";
 import { RegistrarUsuarios } from "../Controladores/Usuarios.controlador.mjs";
 import { ListarUsuarios } from "../Controladores/Usuarios.controlador.mjs";
 import { PerfilAdmin } from "../Controladores/Usuarios.controlador.mjs";
