@@ -12,6 +12,8 @@ import HorariosRoutes from './src/Rutas/Horarios.routes.mjs'; //
 import ReservasRoutes from './src/Rutas/Reservas.routes.mjs'; 
 import CategoriasRoutes from './src/Rutas/Categorias.routes.mjs';
 import SubcategoriasRoutes from './src/Rutas/Subcategorias.routes.mjs';
+import Productosrouter from './src/Rutas/Productos.routes.mjs';
+import Negociosrouter from './src/Rutas/Negocios.routes.mjs';
 
 dotenv.config();// esta línea carga las variables de entorno desde el archivo .env
 const app = express();// esta línea crea una instancia de una aplicación express
@@ -30,7 +32,10 @@ app.use(
 app.use(express.json());// esta línea permite que la aplicación pueda interpretar solicitudes con cuerpo en formato JSON
 app.use(express.urlencoded({ extended: true })); // Para formularios normales
 
-app.use("/Recursos", express.static(path.join(__dirname, "src","/Recursos")));
+app.use('/Recursos', express.static(path.join(__dirname, "src","/Recursos")));
+
+// ✅ IMPORTANTE: Servir archivos estáticos desde la carpeta Recursos
+// app.use('/imagenes', express.static(path.join(__dirname, 'Recursos')));
 
 app.use('/api/cargos', CargosRoutes);// esta línea monta las rutas de usuarios en la ruta /cargos
 app.use('/api/usuarios', UsuariosRoutes);// esta línea monta las rutas de usuarios en la ruta /usuarios
@@ -39,6 +44,8 @@ app.use("/api/tablas", TablasRoutes);
 app.use("/api/reservas", ReservasRoutes);
 app.use("/api/categorias", CategoriasRoutes);
 app.use("/api/subcategorias", SubcategoriasRoutes);
+app.use("/api/productos", Productosrouter);
+app.use("/api/negocios", Negociosrouter);
 
 
 
