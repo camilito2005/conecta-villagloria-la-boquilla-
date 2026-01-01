@@ -315,11 +315,12 @@
 }
 
 /* Modal de detalle */
+/* Modal de detalle - CORREGIDO */
 .modal-detalle-producto {
   background: white;
   border-radius: 24px;
-  max-width: 900px;
-  width: 90%;
+  max-width: 1200px; /* ✅ Aumentado para incluir reseñas */
+  width: 95%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
@@ -347,11 +348,20 @@
   transform: rotate(90deg);
 }
 
+/* ✅ CONTENIDO DEL MODAL - CORREGIDO */
 .modal-detalle-contenido {
+  display: flex;
+  flex-direction: column; /* ✅ Cambiar a columna vertical */
+  gap: 30px;
+  padding: 60px 40px 40px 40px; /* ✅ Más padding arriba por el botón cerrar */
+}
+
+/* ✅ SECCIÓN SUPERIOR: Imagen + Info del producto */
+.modal-producto-superior {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 400px 1fr; /* ✅ Imagen fija + Info flexible */
   gap: 40px;
-  padding: 40px;
+  align-items: start;
 }
 
 .modal-detalle-imagen {
@@ -359,7 +369,9 @@
   border-radius: 16px;
   overflow: hidden;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  aspect-ratio: 1;
+  width: 100%;
+  height: 400px; /* ✅ Altura fija */
+  flex-shrink: 0; /* ✅ No se encoge */
 }
 
 .modal-detalle-imagen img {
@@ -492,8 +504,8 @@
 }
 
 .cantidad-selector button {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border: 2px solid #3498db;
   background: white;
   color: #3498db;
@@ -579,6 +591,77 @@
 .btn-comprar-ahora:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+}
+
+/* ✅ SECCIÓN DE RESEÑAS EN EL MODAL */
+.seccion-resenas-modal {
+  width: 100%;
+  padding-top: 30px;
+  border-top: 3px solid #ecf0f1;
+  margin-top: 20px;
+}
+
+/* Ajustes específicos para reseñas dentro del modal */
+.seccion-resenas-modal .resenas-container {
+  padding: 0; /* ✅ Quitar padding extra */
+}
+
+.seccion-resenas-modal .resenas-header {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+}
+
+.seccion-resenas-modal .promedio-numero {
+  font-size: 40px; /* ✅ Ligeramente más pequeño en el modal */
+}
+
+.seccion-resenas-modal .formulario-resena {
+  background: #f8f9fa;
+  border: 2px solid #e8e8e8;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .modal-producto-superior {
+    grid-template-columns: 1fr; /* ✅ Una columna en tablets */
+  }
+  
+  .modal-detalle-imagen {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-detalle-producto {
+    max-width: 100%;
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .modal-detalle-contenido {
+    padding: 50px 20px 20px 20px;
+  }
+  
+  .modal-producto-superior {
+    gap: 25px;
+  }
+  
+  .modal-detalle-imagen {
+    height: 300px;
+  }
+  
+  .modal-acciones {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-titulo {
+    font-size: 24px;
+  }
+  
+  .precio-grande {
+    font-size: 32px;
+  }
 }
 
 /* Responsive */
