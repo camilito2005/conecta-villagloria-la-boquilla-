@@ -1,0 +1,319 @@
+.resenas-container {
+  padding: 30px 0;
+}
+
+.resenas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.resenas-stats {
+  flex: 1;
+}
+
+.promedio-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.promedio-numero {
+  font-size: 48px;
+  font-weight: 700;
+  color: #f39c12;
+}
+
+.estrellas-container {
+  display: flex;
+  gap: 4px;
+}
+
+.estrella {
+  font-size: 28px;
+  color: #ddd;
+  transition: all 0.2s ease;
+}
+
+.estrella.llena {
+  color: #f39c12;
+}
+
+.estrella.editable {
+  cursor: pointer;
+  font-size: 36px;
+}
+
+.estrella.editable:hover {
+  transform: scale(1.2);
+}
+
+.total-resenas {
+  font-size: 16px;
+  color: #7f8c8d;
+}
+
+.btn-escribir-resena {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-escribir-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Formulario de reseña */
+.formulario-resena {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  border: 2px solid #e0e0e0;
+}
+
+.formulario-resena h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+.form-group-resena {
+  margin-bottom: 20px;
+}
+
+.form-group-resena label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 15px;
+}
+
+.form-group-resena textarea {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.form-group-resena textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.form-group-resena small {
+  display: block;
+  margin-top: 8px;
+  color: #7f8c8d;
+  font-size: 13px;
+}
+
+.form-actions-resena {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-guardar-resena,
+.btn-cancelar-resena {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-guardar-resena {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+}
+
+.btn-guardar-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+}
+
+.btn-cancelar-resena {
+  background: white;
+  color: #7f8c8d;
+  border: 2px solid #e0e0e0;
+}
+
+.btn-cancelar-resena:hover {
+  border-color: #7f8c8d;
+  color: #2c3e50;
+}
+
+/* Lista de reseñas */
+.resenas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sin-resenas {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  color: #7f8c8d;
+}
+
+.sin-resenas p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.resena-card {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.resena-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-color: #3498db;
+}
+
+.resena-propia {
+  border-color: #3498db;
+  background: linear-gradient(to right, #ebf5fb, white);
+}
+
+.resena-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.resena-usuario-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resena-usuario-nombre {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.resena-header-card .estrellas-container .estrella {
+  font-size: 20px;
+}
+
+.resena-fecha {
+  font-size: 14px;
+  color: #95a5a6;
+}
+
+.resena-comentario {
+  margin: 0 0 15px 0;
+  color: #555;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.resena-acciones {
+  display: flex;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn-editar-resena,
+.btn-eliminar-resena {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-editar-resena {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-editar-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-eliminar-resena {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.btn-eliminar-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+/* Ajustes cuando las reseñas están dentro del modal */
+.seccion-resenas-modal .btn-escribir-resena {
+  white-space: nowrap;
+}
+
+.seccion-resenas-modal .resenas-header {
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.seccion-resenas-modal .promedio-container {
+  min-width: 250px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resenas-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .promedio-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn-escribir-resena {
+    width: 100%;
+  }
+
+  .form-actions-resena {
+    flex-direction: column;
+  }
+
+  .resena-header-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .resena-acciones {
+    flex-direction: column;
+  }
+}
