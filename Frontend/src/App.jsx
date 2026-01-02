@@ -10,7 +10,6 @@ import { Registro } from "./paginas/registro.jsx";
 import { Login } from "./paginas/login.jsx";
 import { Contactanos } from "./paginas/contactanos.jsx";
 import { Usuarios } from "./paginas/Usuarios.jsx";
-import { Tablas } from "./paginas/tablas.jsx";
 import { Agg_horarios } from "./paginas/Horarios.jsx";
 import { AdminUsuariosInactivos } from "./paginas/AdminUsuariosInactivos.jsx";
 import { GuiaReservasPendientes } from "./paginas/GuiaReservas.jsx";
@@ -20,11 +19,13 @@ import { Roles } from "./paginas/Roles.jsx";
 import { GestionCategorias } from "./paginas/CategoriasySub.jsx";
 import { GestionProductos } from "./paginas/Productos.jsx";
 import { GestionNegocios } from "./paginas/Negocios.jsx";
+import { CarritoProvider } from "./globales/CarritoContext.jsx";
 
 import "./App.css";
 
 function App() {
   return (
+    < CarritoProvider >
     <Router>
       <Layout>
         <Routes>
@@ -38,7 +39,6 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/usuarios" element={<Usuarios />} />
-          <Route path="/ejercicio" element={<Tablas />} />
           <Route path="/agg_horarios" element={<Agg_horarios />} />
           <Route path="/usuarios/inactivos" element={<AdminUsuariosInactivos />} />
           <Route path="/usuarios/tours" element={<GuiaReservasPendientes />} />
@@ -52,6 +52,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </CarritoProvider >
   );
 }
 
