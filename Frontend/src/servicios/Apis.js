@@ -88,3 +88,10 @@ export function Deletedata(accion, id) {
     method: "DELETE",
   });
 }
+
+export function DeletedataWithBody(accion, data) {
+  return Fetchapi(accion, {
+    method: "DELETE",
+    body: JSON.stringify(data),
+  });
+}
