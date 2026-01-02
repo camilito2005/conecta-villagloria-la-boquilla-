@@ -62,3 +62,6 @@ Thumbs.db
 requerimientos.js
 errores y puntos pendientes.js
 # chore
+
+# copia de seguridad de la base de datos
+backup.sql
