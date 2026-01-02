@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Getdata } from "../servicios/Apis.js";
 import { Modal } from "../componentes/Modal.jsx";
+import { useCarrito } from "../globales/CarritoContext";
+
+import { useVerificarSesion } from "../servicios/Auth.js";
+import { Carrito } from "../componentes/Carrito";
+import { BotonCarrito } from "../componentes/BotonCarrito";
+import { Resenas } from "../componentes/Reseñas";
+import { useNavigate } from "react-router-dom";
 import "../css/Catalogos.css";
 
 export function Catalogo() {
+  const { agregarAlCarrito } = useCarrito();
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
   const [negocios, setNegocios] = useState([]);
   const [modalData, setModalData] = useState(null);
+
+  const navigate = useNavigate();
+
+  // ✅ AGREGAR ESTADO DEL USUARIO
+  const [usuario, setUsuario] = useState(null);
+  const noRedirect = true; // Evitar redirección al login en el catálogo
+  useVerificarSesion({ setUsuario, setModalData: setModalData, navigate, noRedirect });
 
   // Filtros
   const [filtroCategoria, setFiltroCategoria] = useState("");
@@ -38,7 +53,9 @@ export function Catalogo() {
   const cargarSubcategorias = async () => {
     const data = await Getdata("subcategorias/publicas");
     if (data?.subcategorias) {
-      setSubcategorias(Array.isArray(data.subcategorias) ? data.subcategorias : []);
+      setSubcategorias(
+        Array.isArray(data.subcategorias) ? data.subcategorias : []
+      );
     } else {
       setSubcategorias([]);
     }
@@ -89,7 +106,9 @@ export function Catalogo() {
       const cumpleNegocio =
         !filtroNegocio || prod.id_negocio === parseInt(filtroNegocio);
 
-      return cumpleBusqueda && cumpleCategoria && cumpleSubcategoria && cumpleNegocio;
+      return (
+        cumpleBusqueda && cumpleCategoria && cumpleSubcategoria && cumpleNegocio
+      );
     })
     .sort((a, b) => {
       switch (ordenamiento) {
@@ -112,8 +131,8 @@ export function Catalogo() {
     setMostrarModalProducto(true);
   };
 
-  // Agregar al carrito (simulado)
-  const agregarAlCarrito = () => {
+  // Agregar al carrito (actualizado)
+  const agregarAlCarritoHandler = () => {
     if (cantidad > productoSeleccionado.stock) {
       setModalData({
         title: "Stock insuficiente",
@@ -123,10 +142,13 @@ export function Catalogo() {
       return;
     }
 
-    // Aquí iría la lógica de agregar al carrito
+    agregarAlCarrito(productoSeleccionado, cantidad);
+
     setModalData({
       title: "¡Agregado al carrito!",
-      message: `${cantidad} ${cantidad === 1 ? "unidad" : "unidades"} de "${productoSeleccionado.nombre}" agregadas al carrito.`,
+      message: `${cantidad} ${cantidad === 1 ? "unidad" : "unidades"} de "${
+        productoSeleccionado.nombre
+      }" agregadas al carrito.`,
       type: "success",
     });
 
@@ -234,7 +256,10 @@ export function Catalogo() {
           </select>
         </div>
 
-        {(busqueda || filtroCategoria || filtroSubcategoria || filtroNegocio) && (
+        {(busqueda ||
+          filtroCategoria ||
+          filtroSubcategoria ||
+          filtroNegocio) && (
           <button
             className="btn-limpiar-catalogo"
             onClick={() => {
@@ -264,7 +289,10 @@ export function Catalogo() {
             <div className="sin-productos-icon">📦</div>
             <h3>No se encontraron productos</h3>
             <p>
-              {busqueda || filtroCategoria || filtroSubcategoria || filtroNegocio
+              {busqueda ||
+              filtroCategoria ||
+              filtroSubcategoria ||
+              filtroNegocio
                 ? "Intenta ajustar los filtros de búsqueda"
                 : "No hay productos disponibles en este momento"}
             </p>
@@ -368,113 +396,149 @@ export function Catalogo() {
             </button>
 
             <div className="modal-detalle-contenido">
-              <div className="modal-detalle-imagen">
-                {productoSeleccionado.imagen_url ? (
-                  <img
-                    src={`${BASE_URL}${productoSeleccionado.imagen_url}`}
-                    alt={productoSeleccionado.nombre}
-                  />
-                ) : (
-                  <div className="sin-imagen-modal">📦</div>
-                )}
-              </div>
-
-              <div className="modal-detalle-info">
-                <div className="modal-badges">
-                  <span className="badge-modal categoria">
-                    {getNombreCategoria(productoSeleccionado.categoria_id)}
-                  </span>
-                  <span className="badge-modal subcategoria">
-                    {getNombreSubcategoria(productoSeleccionado.subcategoria_id)}
-                  </span>
-                  {productoSeleccionado.id_negocio && (
-                    <span className="badge-modal negocio">
-                      🏪 {getNombreNegocio(productoSeleccionado.id_negocio)}
-                    </span>
+              {/* ✅ SECCIÓN SUPERIOR: Imagen + Info en grid */}
+              <div className="modal-producto-superior">
+                <div className="modal-detalle-imagen">
+                  {productoSeleccionado.imagen_url ? (
+                    <img
+                      src={`${BASE_URL}${productoSeleccionado.imagen_url}`}
+                      alt={productoSeleccionado.nombre}
+                    />
+                  ) : (
+                    <div className="sin-imagen-modal">📦</div>
                   )}
                 </div>
 
-                <h2 className="modal-titulo">{productoSeleccionado.nombre}</h2>
-
-                <div className="modal-precio">
-                  <span className="precio-grande">
-                    ${new Intl.NumberFormat("es-CO").format(productoSeleccionado.precio)}
-                  </span>
-                  <span className="precio-cop">COP</span>
-                </div>
-
-                {productoSeleccionado.descripcion && (
-                  <div className="modal-descripcion">
-                    <h4>Descripción</h4>
-                    <p>{productoSeleccionado.descripcion}</p>
-                  </div>
-                )}
-
-                <div className="modal-stock">
-                  <span
-                    className={
-                      productoSeleccionado.stock <= 5 ? "stock-bajo" : "stock-ok"
-                    }
-                  >
-                    {productoSeleccionado.stock <= 5
-                      ? `¡Solo quedan ${productoSeleccionado.stock} unidades!`
-                      : `${productoSeleccionado.stock} unidades disponibles`}
-                  </span>
-                </div>
-
-                <div className="modal-cantidad">
-                  <label>Cantidad:</label>
-                  <div className="cantidad-selector">
-                    <button
-                      onClick={() => setCantidad(Math.max(1, cantidad - 1))}
-                      disabled={cantidad <= 1}
-                    >
-                      −
-                    </button>
-                    <input
-                      type="number"
-                      value={cantidad}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value) || 1;
-                        setCantidad(Math.min(productoSeleccionado.stock, Math.max(1, val)));
-                      }}
-                      min="1"
-                      max={productoSeleccionado.stock}
-                    />
-                    <button
-                      onClick={() =>
-                        setCantidad(Math.min(productoSeleccionado.stock, cantidad + 1))
-                      }
-                      disabled={cantidad >= productoSeleccionado.stock}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
-                <div className="modal-total">
-                  <span>Total:</span>
-                  <span className="total-precio">
-                    $
-                    {new Intl.NumberFormat("es-CO").format(
-                      productoSeleccionado.precio * cantidad
+                <div className="modal-detalle-info">
+                  <div className="modal-badges">
+                    <span className="badge-modal categoria">
+                      {getNombreCategoria(productoSeleccionado.categoria_id)}
+                    </span>
+                    <span className="badge-modal subcategoria">
+                      {getNombreSubcategoria(
+                        productoSeleccionado.subcategoria_id
+                      )}
+                    </span>
+                    {productoSeleccionado.id_negocio && (
+                      <span className="badge-modal negocio">
+                        🏪 {getNombreNegocio(productoSeleccionado.id_negocio)}
+                      </span>
                     )}
-                  </span>
-                </div>
+                  </div>
 
-                <div className="modal-acciones">
-                  <button className="btn-agregar-carrito" onClick={agregarAlCarrito}>
-                    🛒 Agregar al carrito
-                  </button>
-                  <button className="btn-comprar-ahora" onClick={comprarAhora}>
-                    💳 Comprar ahora
-                  </button>
+                  <h2 className="modal-titulo">
+                    {productoSeleccionado.nombre}
+                  </h2>
+
+                  <div className="modal-precio">
+                    <span className="precio-grande">
+                      $
+                      {new Intl.NumberFormat("es-CO").format(
+                        productoSeleccionado.precio
+                      )}
+                    </span>
+                    <span className="precio-cop">COP</span>
+                  </div>
+
+                  {productoSeleccionado.descripcion && (
+                    <div className="modal-descripcion">
+                      <h4>Descripción</h4>
+                      <p>{productoSeleccionado.descripcion}</p>
+                    </div>
+                  )}
+
+                  <div className="modal-stock">
+                    <span
+                      className={
+                        productoSeleccionado.stock <= 5
+                          ? "stock-bajo"
+                          : "stock-ok"
+                      }
+                    >
+                      {productoSeleccionado.stock <= 5
+                        ? `¡Solo quedan ${productoSeleccionado.stock} unidades!`
+                        : `${productoSeleccionado.stock} unidades disponibles`}
+                    </span>
+                  </div>
+
+                  <div className="modal-cantidad">
+                    <label>Cantidad:</label>
+                    <div className="cantidad-selector">
+                      <button
+                        onClick={() => setCantidad(Math.max(1, cantidad - 1))}
+                        disabled={cantidad <= 1}
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        value={cantidad}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value) || 1;
+                          setCantidad(
+                            Math.min(
+                              productoSeleccionado.stock,
+                              Math.max(1, val)
+                            )
+                          );
+                        }}
+                        min="1"
+                        max={productoSeleccionado.stock}
+                      />
+                      <button
+                        onClick={() =>
+                          setCantidad(
+                            Math.min(productoSeleccionado.stock, cantidad + 1)
+                          )
+                        }
+                        disabled={cantidad >= productoSeleccionado.stock}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="modal-total">
+                    <span>Total:</span>
+                    <span className="total-precio">
+                      $
+                      {new Intl.NumberFormat("es-CO").format(
+                        productoSeleccionado.precio * cantidad
+                      )}
+                    </span>
+                  </div>
+
+                  <div className="modal-acciones">
+                    <button
+                      className="btn-agregar-carrito"
+                      onClick={agregarAlCarritoHandler}
+                    >
+                      🛒 Agregar al carrito
+                    </button>
+                    <button
+                      className="btn-comprar-ahora"
+                      onClick={comprarAhora}
+                    >
+                      💳 Comprar ahora
+                    </button>
+                  </div>
                 </div>
+              </div>
+
+              {/* ✅ SECCIÓN INFERIOR: Reseñas ocupan todo el ancho */}
+              <div className="seccion-resenas-modal">
+                <Resenas
+                  id_producto={productoSeleccionado.id_producto}
+                  usuario={usuario}
+                />
               </div>
             </div>
           </div>
         </div>
       )}
+
+      <Carrito />
+      <BotonCarrito />
 
       {modalData && (
         <Modal
