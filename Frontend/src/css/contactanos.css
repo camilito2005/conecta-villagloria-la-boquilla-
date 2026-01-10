@@ -56,11 +56,11 @@
 .form-group textarea:focus {
   border-color: #1e3a8a;
 }
-
+/* Botones */
 button {
   background: #1e3a8a;
   color: #ffffff;
-  padding: 0.9rem;
+  padding: 0.3rem;
   border: none;
   border-radius: 10px;
   font-size: 1.1rem;
