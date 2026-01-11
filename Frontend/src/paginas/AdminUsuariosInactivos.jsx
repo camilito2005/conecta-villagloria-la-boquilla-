@@ -7,27 +7,19 @@ import "../css/AdminUsuariosInactivos.css";
 
 export function AdminUsuariosInactivos() {
   const [usuarios, setUsuarios] = useState([]);
+  const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
-  useVerificarSesion({ setUsuario: () => {}, setModalData, navigate });
+  // useVerificarSesion({ setUsuario: () => {}, setModalData, navigate });
+  useVerificarSesion({ 
+    setUsuario, 
+    setModalData, 
+    navigate,
+    sincronizarCarrito: false // ✅ No necesita carrito en esta vista
+  });
 
-//   useEffect(() => {
-//     const fetchInactivos = async () => {
-//       try {
-//         const data = await Getdata("usuarios/inactivos");
-//         console.log("Usuarios inactivos obtenidos:", data);
-//         setUsuarios(data);
-//       } catch (error) {
-//         console.error("Error al obtener usuarios inactivos:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchInactivos();
-//   }, []);
 useEffect(() => {
   const fetchInactivos = async () => {
     try {
