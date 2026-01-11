@@ -17,8 +17,7 @@ dotenv.config();
 
 export async function RegistrarUsuarios(req, res) {
   try {
-    const NuevoUsuario = req.body;
-    console.log("datos de usuario", NuevoUsuario);
+    const NuevoUsuario = req.body;aa
     // console.log("datos de usuario",req.body);
 
     // -------------------------------
@@ -563,7 +562,6 @@ export async function ActualizarMiPerfil(req, res) {
       telefono,
       direccion,
     });
-    console.log("resultado del modelo de ActualizarMiPerfil",actualizado);
 
     if (!actualizado) {
       return res.status(500).json({
