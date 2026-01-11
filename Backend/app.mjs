@@ -15,6 +15,7 @@ import SubcategoriasRoutes from './src/Rutas/Subcategorias.routes.mjs';
 import Productosrouter from './src/Rutas/Productos.routes.mjs';
 import Negociosrouter from './src/Rutas/Negocios.routes.mjs';
 import Reseñasroutes from './src/Rutas/Resenas.routes.mjs';
+import Carritosroutes from './src/Rutas/Carrito.routes.mjs';
 
 dotenv.config();// esta línea carga las variables de entorno desde el archivo .env
 const app = express();// esta línea crea una instancia de una aplicación express
@@ -48,6 +49,7 @@ app.use("/api/subcategorias", SubcategoriasRoutes);
 app.use("/api/productos", Productosrouter);
 app.use("/api/negocios", Negociosrouter);
 app.use("/api/resenas", Reseñasroutes);
+app.use("/api/carrito", Carritosroutes);
 
 
 app.listen(process.env.PORT || 3000, () => // esta línea inicia el servidor en el puerto especificado en las variables de entorno o en el puerto 3000 si no está especificado
