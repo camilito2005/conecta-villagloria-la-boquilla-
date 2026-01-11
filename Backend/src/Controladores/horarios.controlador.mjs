@@ -281,7 +281,6 @@ export async function Editar(req, res) {
 export async function EliminarHorario(req, res) {
   try {
     const { id_horario } = req.params;
-    console.log("ID del horario a eliminar:", id_horario);
 
     if (!id_horario) {
       return res.status(401).json({
@@ -351,8 +350,6 @@ export async function Cambiarestado (req,res){
   try {
     const {id_horario} = req.params;
     const {disponible} = req.body;
-    console.log("id_horario:",id_horario);
-    console.log("disponible:",disponible);
     
     if (!id_horario || disponible === undefined) {
       return res.status(400).json({
