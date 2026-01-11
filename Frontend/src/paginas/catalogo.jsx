@@ -23,7 +23,7 @@ export function Catalogo() {
   // ✅ AGREGAR ESTADO DEL USUARIO
   const [usuario, setUsuario] = useState(null);
   const noRedirect = true; // Evitar redirección al login en el catálogo
-  useVerificarSesion({ setUsuario, setModalData: setModalData, navigate, noRedirect });
+  useVerificarSesion({ setUsuario, setModalData: setModalData, navigate, noRedirect, sincronizarCarrito: true });
 
   // Filtros
   const [filtroCategoria, setFiltroCategoria] = useState("");
