@@ -237,7 +237,6 @@ export function GestionProductos() {
 
       // ✅ Si hay nueva imagen, agregarla
       if (archivoImagen) {
-        console.log("en este caso si hay imagen nueva");
         formData.append("imagen", archivoImagen);
       }
 
@@ -260,7 +259,6 @@ export function GestionProductos() {
           formData,
           // true // Indicar que es FormData
         );
-        console.log("Resultado edición:", resultado);
         if (resultado?.showModal) {
           setModalData(resultado.modal);
 
