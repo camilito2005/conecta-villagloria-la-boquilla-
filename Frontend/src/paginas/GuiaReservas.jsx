@@ -71,7 +71,6 @@ export function GuiaReservasPendientes() {
       id_horario,
     });
     
-    console.log("Respuesta del servidor:", res);
 
     if (res?.showModal) {
       setModalData({
