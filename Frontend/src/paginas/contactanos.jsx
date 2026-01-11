@@ -23,7 +23,7 @@ export function Contactanos() {
           <textarea id="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
         </div>
 
-        <button type="submit">Enviar</button>
+        <button  type="submit">Enviar</button>
       </form>
     </section>
   );
