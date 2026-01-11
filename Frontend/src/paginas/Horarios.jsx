@@ -44,7 +44,6 @@ export function Agg_horarios() {
     };
 
     const Respuesta = await Postdata("horarios/agg_horarios", Datos);
-    console.log("Respuesta horarios:", Respuesta);
 
     if (Respuesta?.showModal) {
       setModalData({
