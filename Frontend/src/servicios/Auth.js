@@ -2,10 +2,20 @@
 // useVerificarSesion.js
 import { useEffect } from "react";
 import { Postdata } from "../servicios/Apis.js";
+import { useCarrito } from "../globales/CarritoContext";
 
 // voy a agregar un parametro solo para usarlo en el catalogo, nesecito que no me redirija al login 
 
-export function  useVerificarSesion ({ setUsuario, setModalData, navigate, noRedirect = false }) {
+export function  useVerificarSesion ({ setUsuario, setModalData, navigate, noRedirect = false, sincronizarCarrito = false }) {
+
+  // ✅ Solo obtener funciones del carrito si es necesario
+  const carritoContext = sincronizarCarrito ? useCarrito() : { 
+    setUsuarioCarrito: () => {}, 
+    cargarCarritoDesdeDB: async () => {} 
+  };
+
+  const { setUsuarioCarrito, cargarCarritoDesdeDB } = carritoContext;
+
   useEffect(() => {
     const verificar = async () => {
       const result = await Postdata("usuarios/verificar", { enviarJson: true });
@@ -26,8 +36,27 @@ export function  useVerificarSesion ({ setUsuario, setModalData, navigate, noRed
         return;
       }
 
-      if (result.usuario) {
-        setUsuario(result.usuario);
+        if (result.usuario) {
+        // ✅ NORMALIZAR: Asegurar que siempre tenga 'id'
+        const usuarioNormalizado = {
+          ...result.usuario,
+          id: result.usuario.id || result.usuario.id_usuario, // ✅ Priorizar 'id', si no existe usar 'id_usuario'
+        };
+        
+        setUsuario(usuarioNormalizado);
+
+        // ✅ Actualizar usuario en el carrito
+        setUsuarioCarrito(usuarioNormalizado);
+
+        // ✅ Solo sincronizar carrito si se solicitó explícitamente
+          if (sincronizarCarrito) {
+            setUsuarioCarrito(usuarioNormalizado);
+            
+            if (usuarioNormalizado.id) {
+              await cargarCarritoDesdeDB(usuarioNormalizado.id);
+            }
+          }
+        
       }
     };
 
