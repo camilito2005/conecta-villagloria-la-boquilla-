@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Postdata } from "../servicios/Apis.js";
 import { Modal } from "../componentes/Modal.jsx";
 import { useNavigate } from "react-router-dom";
+import { useCarrito } from "../globales/CarritoContext";
 
 export function Login() {
   const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
+  const { sincronizarCarritoConBD, setUsuarioCarrito } = useCarrito();
 
   const Enviardatos = async (e) => {
     e.preventDefault();
@@ -30,13 +32,18 @@ export function Login() {
         return;
       }
 
-      // ✅ Si el login fue exitoso:
+      //  Si el login fue exitoso:
       if (Respuesta.usuario) {
         // Guardamos en localStorage que hay sesión activa
         localStorage.setItem("sesionActiva", "true");
 
         // 🔔 Notificamos al resto de la app que cambió el estado de sesión
         window.dispatchEvent(new Event("sesion-cambio"));
+
+         setUsuarioCarrito(Respuesta.usuario);
+
+        //  2. Sincronizar carrito
+        await sincronizarCarritoConBD(Respuesta.usuario.id_usuario);
 
         // Redirección según el rol del usuario
         const rol = Respuesta.usuario?.id_cargo;
