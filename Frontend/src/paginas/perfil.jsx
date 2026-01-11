@@ -39,13 +39,11 @@ export function Perfil() {
     };
     try {
       const response = await Putdata(`usuarios/actualizar_mi_perfil`, payload);
-      console.log("respuesta para actualizar",response);
 
        
 
     // 🔥 Después de actualizar en backend → refresco SIEMPRE desde BD
     const yo = await Getdata("usuarios/yo");
-    console.log("respuesta de yo",yo)
 
     if (yo.usuario) {
       setUsuario(yo.usuario); // solo un render limpio
