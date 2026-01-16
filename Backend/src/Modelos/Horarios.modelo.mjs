@@ -122,7 +122,7 @@ export async function VerificarReservasActivas(id_horario) {
   }
 }
 
-// ✅ NUEVA FUNCIÓN
+//  NUEVA FUNCIÓN
 export async function ContarReservasActivas(id_horario) {
   try {
     const consulta = `
