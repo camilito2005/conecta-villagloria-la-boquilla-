@@ -6,7 +6,7 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ✅ Función para crear upload con carpeta específica
+//  Función para crear upload con carpeta específica
 export const crearUpload = (carpeta) => {
   const rutaDestino = path.join(__dirname, `../Recursos/${carpeta}`);
 
@@ -42,7 +42,7 @@ export const crearUpload = (carpeta) => {
     // }
 
      if (!extensionesValidas.includes(ext) || !mimeValidos.includes(mime)) {
-      // ✅ Crear error personalizado con tipo específico
+      //  Crear error personalizado con tipo específico
       const error = new Error("INVALID_FILE_TYPE");
       error.code = "INVALID_FILE_TYPE";
       return cb(error, false);
