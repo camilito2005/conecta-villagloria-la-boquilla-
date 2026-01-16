@@ -20,6 +20,7 @@ import { GestionCategorias } from "./paginas/CategoriasySub.jsx";
 import { GestionProductos } from "./paginas/Productos.jsx";
 import { GestionNegocios } from "./paginas/Negocios.jsx";
 import { CarritoProvider } from "./globales/CarritoContext.jsx";
+import { Checkout } from "./paginas/Checkout.jsx";
 
 import "./App.css";
 
@@ -48,7 +49,7 @@ function App() {
           <Route path="/usuarios/categorias" element={<GestionCategorias />} />
           <Route path="/Productos" element={<GestionProductos />} />
           <Route path="/Negocios" element={<GestionNegocios />} />
-
+          <Route path="/Checkout" element={<Checkout />} />
         </Routes>
       </Layout>
     </Router>
