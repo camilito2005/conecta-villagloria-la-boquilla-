@@ -3,7 +3,7 @@ import {
   InsertarSubcategoria,
   Editar_subcategorias,
   Eliminar_subcategorias,
-  VerificarSubcategoriaExistente, // ✅ NUEVA
+  VerificarSubcategoriaExistente, //  NUEVA
 } from "../Modelos/Subcategorias.Modelo.mjs";
 
 export async function ObtenerSubcategorias(req, res) {
@@ -56,7 +56,7 @@ export async function Crear_subcategoria(req, res) {
       });
     }
 
-    // ✅ NUEVO: Verificar si ya existe
+    //  NUEVO: Verificar si ya existe
     const existe = await VerificarSubcategoriaExistente(
       subcategoria.trim(),
       categoria_id
@@ -77,7 +77,7 @@ export async function Crear_subcategoria(req, res) {
 
     const nuevaSubcategoriaId = await InsertarSubcategoria(
       subcategoria.trim(),
-      parent_id || null, // ✅ CORREGIDO: Asegurar que sea null si no hay valor
+      parent_id || null, //  CORREGIDO: Asegurar que sea null si no hay valor
       categoria_id,
       fecha_creacion
     );
@@ -163,7 +163,7 @@ export async function Modificar_subcategorias(req, res) {
     const subcategoriaModificada = await Editar_subcategorias(
       id,
       subcategoria.trim(),
-      parent_id || null, // ✅ CORREGIDO: Asegurar que sea null si no hay valor
+      parent_id || null, //  CORREGIDO: Asegurar que sea null si no hay valor
       categoria_id,
       fecha_actualizacion
     );
@@ -220,7 +220,7 @@ export async function Eliminar_subcategoria(req, res) {
       });
     }
 
-    // ✅ CORREGIDO: Agregar await
+    //  CORREGIDO: Agregar await
     const subcategoriaEliminada = await Eliminar_subcategorias(id);
 
     if (!subcategoriaEliminada) {
