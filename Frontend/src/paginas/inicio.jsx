@@ -4,7 +4,7 @@ const Canoas = "../../public/imagenes/Canoas.jpg"
 const Guia = "../../public/imagenes/Guia.jpg";
 const Comida = "../../public/imagenes/Comida.jpg";
 
-import "../css/home.css";
+// import "../css/home.css";
 
 export function Inicio(){
     return (
