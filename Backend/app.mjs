@@ -24,12 +24,20 @@ const __dirname = path.dirname(__filename);
 
 // Servir la carpeta Recursos públicamente
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: "http://localhost:5173", // la URL de tu frontend
-    credentials: true,               // ⬅️ necesario para enviar/recibir cookies
-  })
-);
+
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://conecta-villagloria-la-boquilla-frontend.onrender.com'
+    : 'http://localhost:5173',
+  credentials: true
+}));
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // la URL de tu frontend
+//     credentials: true,               // ⬅️ necesario para enviar/recibir cookies
+//   })
+// );
 
 app.use(express.json());// esta línea permite que la aplicación pueda interpretar solicitudes con cuerpo en formato JSON
 app.use(express.urlencoded({ extended: true })); // Para formularios normales
