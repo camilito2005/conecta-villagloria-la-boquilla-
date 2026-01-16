@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Catalogos.css";
 
 export function Catalogo() {
-  const { agregarAlCarrito } = useCarrito();
+  const { agregarAlCarrito, iniciarCompraDirecta } = useCarrito(); //  Agregar iniciarCompraDirecta
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [subcategorias, setSubcategorias] = useState([]);
@@ -20,7 +20,7 @@ export function Catalogo() {
 
   const navigate = useNavigate();
 
-  // ✅ AGREGAR ESTADO DEL USUARIO
+  //  AGREGAR ESTADO DEL USUARIO
   const [usuario, setUsuario] = useState(null);
   const noRedirect = true; // Evitar redirección al login en el catálogo
   useVerificarSesion({ setUsuario, setModalData: setModalData, navigate, noRedirect, sincronizarCarrito: true });
@@ -167,16 +167,32 @@ export function Catalogo() {
       return;
     }
 
-    // Aquí iría la lógica de compra directa
-    setModalData({
-      title: "Procesando compra",
-      message: "Serás redirigido al proceso de pago...",
-      type: "success",
-    });
+    //  Verificar si hay sesión
+    if (!usuario || !usuario.id) {
+      setModalData({
+        title: "Inicia sesión",
+        message: "Debes iniciar sesión para continuar con la compra.",
+        type: "warning",
+      });
+      
+      // Redirigir al login después de 2 segundos
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      return;
+    }
 
+    //  Iniciar compra directa
+    iniciarCompraDirecta(productoSeleccionado, cantidad);
+    
+    //  Redirigir al checkout
+    navigate("/checkout");
+    
+    // Cerrar modal
     setMostrarModalProducto(false);
     setProductoSeleccionado(null);
   };
+
 
   return (
     <div className="catalogo-container">
@@ -396,7 +412,7 @@ export function Catalogo() {
             </button>
 
             <div className="modal-detalle-contenido">
-              {/* ✅ SECCIÓN SUPERIOR: Imagen + Info en grid */}
+              {/*  SECCIÓN SUPERIOR: Imagen + Info en grid */}
               <div className="modal-producto-superior">
                 <div className="modal-detalle-imagen">
                   {productoSeleccionado.imagen_url ? (
@@ -525,7 +541,7 @@ export function Catalogo() {
                 </div>
               </div>
 
-              {/* ✅ SECCIÓN INFERIOR: Reseñas ocupan todo el ancho */}
+              {/*  SECCIÓN INFERIOR: Reseñas ocupan todo el ancho */}
               <div className="seccion-resenas-modal">
                 <Resenas
                   id_producto={productoSeleccionado.id_producto}
