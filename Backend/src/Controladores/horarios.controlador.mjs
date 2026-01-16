@@ -142,7 +142,7 @@ export async function ListarHorarios(req, res) {
   }
 }
 
-// ✅ NUEVO: Para guías - Lista sus propios horarios
+//  NUEVO: Para guías - Lista sus propios horarios
 export async function ListarHorariosGuia(req, res) {
   try {
     const { id_guia } = req.params;
@@ -219,7 +219,7 @@ export async function Editar(req, res) {
       });
     }
 
-    // ✅ NUEVO: Validar que los nuevos cupos no sean menores a las reservas activas
+    //  NUEVO: Validar que los nuevos cupos no sean menores a las reservas activas
     const reservasActivas = await ContarReservasActivas(id_horario);
     
     if (cupos_disponibles < reservasActivas) {
