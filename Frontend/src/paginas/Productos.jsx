@@ -38,7 +38,7 @@ export function GestionProductos() {
   const id_usuario = usuario?.id;
 
   // URL base del backend
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   // Cargar datos iniciales
   const cargarProductos = async () => {
