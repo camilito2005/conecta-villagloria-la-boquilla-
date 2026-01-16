@@ -152,7 +152,7 @@ export async function Crear_productos(req, res) {
       });
     }
 
-    // ✅ Construir la URL de la imagen si se subió
+    //  Construir la URL de la imagen si se subió
     let imagen_url = null;
     if (req.file) {
       imagen_url = `/Recursos/Productos/${req.file.filename}`;
@@ -198,7 +198,7 @@ export async function Crear_productos(req, res) {
   } catch (error) {
     console.error("Error al crear producto:", error);
 
-    // ✅ Si hay error y se subió una imagen, eliminarla
+    //  Si hay error y se subió una imagen, eliminarla
     if (req.file) {
       const rutaImagen = path.join(__dirname, "../Recursos", req.file.filename);
       fs.unlink(rutaImagen, (err) => {
@@ -307,14 +307,14 @@ export async function Editar_producto(req, res) {
       });
     }
 
-    // ✅ Manejar imagen
+    //  Manejar imagen
     let imagen_url;
 
     if (req.file) {
       // Si hay nueva imagen, usar la nueva
       imagen_url = `/Recursos/Productos/${req.file.filename}`;
 
-      // ✅ Eliminar imagen anterior si existe
+      //  Eliminar imagen anterior si existe
       if (imagen_url_actual && imagen_url_actual !== "") {
         const rutaImagenAnterior = path.join(
           __dirname,
@@ -371,7 +371,7 @@ export async function Editar_producto(req, res) {
   } catch (error) {
     console.error("Error al editar producto:", error);
 
-    // ✅ Si hay error y se subió una imagen nueva, eliminarla
+    //  Si hay error y se subió una imagen nueva, eliminarla
     if (req.file) {
       const rutaImagen = path.join(
         __dirname,
