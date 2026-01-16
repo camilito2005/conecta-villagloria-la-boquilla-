@@ -17,7 +17,7 @@ export function AdminUsuariosInactivos() {
     setUsuario, 
     setModalData, 
     navigate,
-    sincronizarCarrito: false // ✅ No necesita carrito en esta vista
+    sincronizarCarrito: false //  No necesita carrito en esta vista
   });
 
 useEffect(() => {
