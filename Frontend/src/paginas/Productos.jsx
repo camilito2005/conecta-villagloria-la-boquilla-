@@ -23,7 +23,7 @@ export function GestionProductos() {
   const [mostrarModalProducto, setMostrarModalProducto] = useState(false);
   const [productoEditar, setProductoEditar] = useState(null);
 
-  // ✅ NUEVO: Estados para manejo de imagen
+  //  NUEVO: Estados para manejo de imagen
   const [imagenPreview, setImagenPreview] = useState(null);
   const [archivoImagen, setArchivoImagen] = useState(null);
 
@@ -81,7 +81,7 @@ export function GestionProductos() {
   }, [usuario]);
 
   // Filtrar subcategorías por categoría seleccionada
-  const subcategoriasFiltradas = productoEditar?.categoria_id // ✅ Verificar que exista categoría seleccionada
+  const subcategoriasFiltradas = productoEditar?.categoria_id //  Verificar que exista categoría seleccionada
     ? subcategorias.filter(
         (s) => s.categoria_id === productoEditar.categoria_id
       ) // Filtrar si existe categoría seleccionada
@@ -164,7 +164,7 @@ export function GestionProductos() {
           }
     );
 
-    // ✅ Si estamos editando y hay imagen, mostrar preview
+    //  Si estamos editando y hay imagen, mostrar preview
     if (producto?.imagen_url) {
       setImagenPreview(`${BASE_URL}${producto.imagen_url}`);
     } else {
@@ -175,7 +175,7 @@ export function GestionProductos() {
     setMostrarModalProducto(true);
   };
 
-  // ✅ Guardar producto con FormData para enviar imagen
+  //  Guardar producto con FormData para enviar imagen
   const guardarProducto = async () => {
     // Validaciones
     if (!productoEditar.nombre || productoEditar.nombre.trim() === "") {
@@ -224,7 +224,7 @@ export function GestionProductos() {
     }
 
     try {
-      // ✅ Crear FormData para enviar imagen
+      //  Crear FormData para enviar imagen
       const formData = new FormData();
       formData.append("nombre", productoEditar.nombre.trim());
       formData.append("precio", parseFloat(productoEditar.precio));
@@ -235,12 +235,12 @@ export function GestionProductos() {
       formData.append("tipo_negocio", productoEditar.tipo_negocio || "");
       formData.append("id_usuario", id_usuario);
 
-      // ✅ Si hay nueva imagen, agregarla
+      //  Si hay nueva imagen, agregarla
       if (archivoImagen) {
         formData.append("imagen", archivoImagen);
       }
 
-      // ✅ Si estamos editando y NO hay nueva imagen, enviar la URL actual
+      //  Si estamos editando y NO hay nueva imagen, enviar la URL actual
       if (
         productoEditar.id_producto &&
         !archivoImagen &&
@@ -273,7 +273,7 @@ export function GestionProductos() {
       } else {
         // Crear
         const resultado = await PostFormData("productos/crear", formData);
-        // ✅ Verificar si hay error en la respuesta
+        //  Verificar si hay error en la respuesta
         if (resultado?.showModal) {
           setModalData(resultado.modal);
 
@@ -284,7 +284,7 @@ export function GestionProductos() {
             setArchivoImagen(null);
             cargarProductos();
           }
-          // ✅ Si es error, el modal se muestra automáticamente
+          //  Si es error, el modal se muestra automáticamente
         }
       }
     } catch (error) {
@@ -495,7 +495,7 @@ export function GestionProductos() {
             </h3>
 
             <div className="form-producto">
-              {/* ✅ NUEVO: Sección de imagen */}
+              {/*  NUEVO: Sección de imagen */}
               <div className="form-group imagen-upload-container">
                 <label>Imagen del producto</label>
 
