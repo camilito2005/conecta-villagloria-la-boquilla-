@@ -40,7 +40,7 @@ export function GuiaReservasPendientes() {
 
     const data = await Getdata(`reservas/pendientes_guia/${id_guia}`);
 
-    // ✅ CORRECCIÓN: Acceder a data.reservas
+    //  CORRECCIÓN: Acceder a data.reservas
     if (data?.reservas) {
       setReservas(Array.isArray(data.reservas) ? data.reservas : []);
     } else if (Array.isArray(data)) {
