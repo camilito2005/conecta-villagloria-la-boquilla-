@@ -14,7 +14,7 @@ export async function ObtenerSubcategoriasModelo() {
   }
 }
 
-// ✅ NUEVA: Verificar si existe una subcategoría en una categoría
+//  NUEVA: Verificar si existe una subcategoría en una categoría
 export async function VerificarSubcategoriaExistente(
   subcategoria,
   categoria_id
@@ -68,7 +68,7 @@ export async function Editar_subcategorias(
   fecha_actualizacion
 ) {
   try {
-    // ✅ CORREGIDO: Devolver toda la fila, no solo el id
+    //  CORREGIDO: Devolver toda la fila, no solo el id
     const consulta = `
       UPDATE subcategorias 
       SET 
@@ -100,7 +100,7 @@ export async function Editar_subcategorias(
 
 export async function Eliminar_subcategorias(id) {
   try {
-    // ✅ MEJORADO: Verificar si hay productos usando esta subcategoría
+    //  MEJORADO: Verificar si hay productos usando esta subcategoría
     const verificarProductos = `
       SELECT COUNT(*) as total 
       FROM productos 
@@ -114,7 +114,7 @@ export async function Eliminar_subcategorias(id) {
       );
     }
 
-    // ✅ CORREGIDO: Devolver toda la fila, no solo el id
+    //  CORREGIDO: Devolver toda la fila, no solo el id
     const consulta = `DELETE FROM subcategorias WHERE id = $1 RETURNING *`;
     const { rows } = await pool.query(consulta, [id]);
 
