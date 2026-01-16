@@ -37,7 +37,7 @@ export function Catalogo() {
   const [mostrarModalProducto, setMostrarModalProducto] = useState(false);
   const [cantidad, setCantidad] = useState(1);
 
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   // Cargar datos
   const cargarProductos = async () => {
