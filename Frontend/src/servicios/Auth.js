@@ -8,7 +8,7 @@ import { useCarrito } from "../globales/CarritoContext";
 
 export function  useVerificarSesion ({ setUsuario, setModalData, navigate, noRedirect = false, sincronizarCarrito = false }) {
 
-  // ✅ Solo obtener funciones del carrito si es necesario
+  //  Solo obtener funciones del carrito si es necesario
   const carritoContext = sincronizarCarrito ? useCarrito() : { 
     setUsuarioCarrito: () => {}, 
     cargarCarritoDesdeDB: async () => {} 
@@ -37,18 +37,18 @@ export function  useVerificarSesion ({ setUsuario, setModalData, navigate, noRed
       }
 
         if (result.usuario) {
-        // ✅ NORMALIZAR: Asegurar que siempre tenga 'id'
+        //  NORMALIZAR: Asegurar que siempre tenga 'id'
         const usuarioNormalizado = {
           ...result.usuario,
-          id: result.usuario.id || result.usuario.id_usuario, // ✅ Priorizar 'id', si no existe usar 'id_usuario'
+          id: result.usuario.id || result.usuario.id_usuario, //  Priorizar 'id', si no existe usar 'id_usuario'
         };
         
         setUsuario(usuarioNormalizado);
 
-        // ✅ Actualizar usuario en el carrito
+        //  Actualizar usuario en el carrito
         setUsuarioCarrito(usuarioNormalizado);
 
-        // ✅ Solo sincronizar carrito si se solicitó explícitamente
+        //  Solo sincronizar carrito si se solicitó explícitamente
           if (sincronizarCarrito) {
             setUsuarioCarrito(usuarioNormalizado);
             
