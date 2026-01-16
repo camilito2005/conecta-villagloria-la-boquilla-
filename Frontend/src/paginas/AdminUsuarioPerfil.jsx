@@ -30,7 +30,7 @@ export function AdminUsuarioPerfil() {
   }, []);
 
   // console.log("Usuario en AdminUsuarioPerfil:", usuarioSesion);
-  // ✅ 2. Cargar datos del usuario del perfil admin
+  //  2. Cargar datos del usuario del perfil admin
   useEffect(() => {
     const GetUsuario = async () => {
       try {
