@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import Manglar from "../../public/imagenes/Manglares_LaBoquilla_Cartagena.jpg";
-import Canoas from "../../public/imagenes/Canoas.jpg"
-import Guia from "../../public/imagenes/Guia.jpg";
-import Comida from "../../public/imagenes/Comida.jpg";
+const Manglar = "../../public/imagenes/Manglares_LaBoquilla_Cartagena.jpg";
+const Canoas = "../../public/imagenes/Canoas.jpg"
+const Guia = "../../public/imagenes/Guia.jpg";
+const Comida = "../../public/imagenes/Comida.jpg";
 
 import "../css/home.css";
 
