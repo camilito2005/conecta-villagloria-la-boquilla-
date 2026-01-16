@@ -43,7 +43,7 @@ export function GestionCategorias() {
       setModalData(data.modal);
     }
 
-    // ✅ AQUÍ ESTÁ LA CLAVE
+    //  AQUÍ ESTÁ LA CLAVE
     setSubcategorias(
       Array.isArray(data?.subcategorias) ? data.subcategorias : []
     );
