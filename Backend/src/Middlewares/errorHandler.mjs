@@ -2,7 +2,7 @@
 import multer from "multer";
 // Middlewares/errorHandler.js
 export const manejarErroresMulter = (err, req, res, next) => {
-  // ✅ Error de tipo de archivo inválido
+  //  Error de tipo de archivo inválido
   if (err.code === "INVALID_FILE_TYPE") {
     return res.status(400).json({
       mensaje: "Tipo de archivo no permitido",
@@ -15,7 +15,7 @@ export const manejarErroresMulter = (err, req, res, next) => {
     });
   }
 
-  // ✅ Error de tamaño de archivo
+  //  Error de tamaño de archivo
   if (err.code === "LIMIT_FILE_SIZE") {
     return res.status(400).json({
       mensaje: "Archivo muy grande",
@@ -28,7 +28,7 @@ export const manejarErroresMulter = (err, req, res, next) => {
     });
   }
 
-  // ✅ Error de campo inesperado
+  //  Error de campo inesperado
   if (err.code === "LIMIT_UNEXPECTED_FILE") {
     return res.status(400).json({
       mensaje: "Campo de archivo inesperado",
@@ -41,7 +41,7 @@ export const manejarErroresMulter = (err, req, res, next) => {
     });
   }
 
-  // ✅ Otros errores de Multer
+  //  Otros errores de Multer
   if (err instanceof multer.MulterError) {
     return res.status(400).json({
       mensaje: "Error al subir archivo",
@@ -54,6 +54,6 @@ export const manejarErroresMulter = (err, req, res, next) => {
     });
   }
 
-  // ✅ Pasar al siguiente middleware si no es error de Multer
+  //  Pasar al siguiente middleware si no es error de Multer
   next(err);
 };
