@@ -15,7 +15,7 @@ export function Carrito() {
     setMostrarCarrito,
   } = useCarrito();
 
-  const navigate = useNavigate(); // ✅ Hook para navegación
+  const navigate = useNavigate(); //  Hook para navegación
   const BASE_URL = "http://localhost:3000";
 
   const handleCheckout = () => {
@@ -23,7 +23,7 @@ export function Carrito() {
     // alert("Redirigiendo al proceso de pago...");
     // redirijo a la pagina de checkout
     setMostrarCarrito(false);
-    navigate("/Checkout"); // ✅ Uso correcto de navigate
+    navigate("/Checkout"); //  Uso correcto de navigate
   };
 
   if (!mostrarCarrito) return null;
