@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true })); // Para formularios normales
 
 app.use('/Recursos', express.static(path.join(__dirname, "src","/Recursos")));
 
-// ✅ IMPORTANTE: Servir archivos estáticos desde la carpeta Recursos
+//  IMPORTANTE: Servir archivos estáticos desde la carpeta Recursos
 // app.use('/imagenes', express.static(path.join(__dirname, 'Recursos')));
 
 app.use('/api/cargos', CargosRoutes);// esta línea monta las rutas de usuarios en la ruta /cargos
