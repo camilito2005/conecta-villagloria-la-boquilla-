@@ -10,7 +10,7 @@ export function TuristaEstadoReserva() {
   const [reservas, setReservas] = useState([]);
   const [modalData, setModalData] = useState(null);
   const [usuario, setUsuario] = useState(null);
-  const [vistaActual, setVistaActual] = useState("activas"); // ✅ Consistente
+  const [vistaActual, setVistaActual] = useState("activas"); //  Consistente
 
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export function TuristaEstadoReserva() {
   const id_turista = usuario?.id;
 
   const cargarReservas = async () => {
-    // ✅ Mapeo claro entre vista y endpoint
+    //  Mapeo claro entre vista y endpoint
     const endpoint = vistaActual === "activas" 
       ? `reservas/activas/${id_turista}` 
       : `reservas/historial/${id_turista}`;
