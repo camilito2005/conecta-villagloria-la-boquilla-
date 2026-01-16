@@ -5,6 +5,7 @@ const CarritoContext = createContext();
 
 export const useCarrito = () => {
   const context = useContext(CarritoContext);
+
   if (!context) {
     throw new Error("useCarrito debe usarse dentro de CarritoProvider");
   }
@@ -15,18 +16,19 @@ export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
   const [usuario, setUsuario] = useState(null);
+  const [compraDirecta, setCompraDirecta] = useState(null); //  NUEVO
 
-  // ✅ Función para establecer el usuario
+  //  Función para establecer el usuario
   const setUsuarioCarrito = (user) => {
     setUsuario(user);
   };
 
-  // ✅ Determinar si usar localStorage o BD
+  //  Determinar si usar localStorage o BD
   const usarBD = usuario && usuario.id;
 
   // Cargar carrito al iniciar
   useEffect(() => {
-    if (usarBD && usuario.id) { // ✅ VALIDACIÓN IMPORTANTE
+    if (usarBD && usuario.id) { //  VALIDACIÓN IMPORTANTE
       // Usuario con sesión: cargar desde BD
       cargarCarritoDesdeDB(usuario.id);
     } else if (!usuario) {
@@ -42,7 +44,7 @@ export function CarritoProvider({ children }) {
         }
       }
     }
-  }, [usuario]); // ✅ Solo depende de usuario
+  }, [usuario]); //  Solo depende de usuario
 
   // Guardar carrito en localStorage cuando NO hay sesión
   useEffect(() => {
@@ -62,8 +64,8 @@ export function CarritoProvider({ children }) {
   // Agregar producto al carrito
   const agregarAlCarrito = async (producto, cantidad = 1) => {
     
-    if (usarBD && usuario?.id) { // ✅ VALIDACIÓN
-      // ✅ Usuario con sesión: agregar a BD
+    if (usarBD && usuario?.id) { //  VALIDACIÓN
+      //  Usuario con sesión: agregar a BD
       try {
         
         await Postdata("carrito/AgregarCarrito", {
@@ -78,7 +80,7 @@ export function CarritoProvider({ children }) {
         console.error("Error al agregar al carrito en BD:", error);
       }
     } else {
-      // ✅ Usuario SIN sesión: agregar a localStorage}
+      //  Usuario SIN sesión: agregar a localStorage}
       setCarrito((prevCarrito) => {
         const productoExistente = prevCarrito.find(
           (item) => item.id_producto === producto.id_producto
@@ -108,8 +110,8 @@ export function CarritoProvider({ children }) {
 
   // Eliminar producto del carrito
   const eliminarDelCarrito = async (id_producto) => {
-    if (usarBD && usuario?.id) { // ✅ VALIDACIÓN
-      // ✅ Usuario con sesión: eliminar de BD
+    if (usarBD && usuario?.id) { //  VALIDACIÓN
+      //  Usuario con sesión: eliminar de BD
       try {
         await Deletedata(`carrito/EliminarProducto/${usuario.id}/${id_producto}`);
         await cargarCarritoDesdeDB(usuario.id);
@@ -117,7 +119,7 @@ export function CarritoProvider({ children }) {
         console.error("Error al eliminar del carrito en BD:", error);
       }
     } else {
-      // ✅ Usuario SIN sesión: eliminar de localStorage
+      //  Usuario SIN sesión: eliminar de localStorage
       setCarrito((prevCarrito) =>
         prevCarrito.filter((item) => item.id_producto !== id_producto)
       );
@@ -132,8 +134,8 @@ export function CarritoProvider({ children }) {
       return;
     }
 
-    if (usarBD && usuario?.id) { // ✅ VALIDACIÓN
-      // ✅ Usuario con sesión: actualizar en BD
+    if (usarBD && usuario?.id) { //  VALIDACIÓN
+      //  Usuario con sesión: actualizar en BD
       try {
         await Putdata("carrito/ActualizarCantidad", {
           id_usuario: usuario.id,
@@ -145,7 +147,7 @@ export function CarritoProvider({ children }) {
         console.error("Error al actualizar cantidad en BD:", error);
       }
     } else {
-      // ✅ Usuario SIN sesión: actualizar localStorage
+      //  Usuario SIN sesión: actualizar localStorage
       setCarrito((prevCarrito) =>
         prevCarrito.map((item) =>
           item.id_producto === id_producto
@@ -161,8 +163,8 @@ export function CarritoProvider({ children }) {
 
   // Vaciar carrito
   const vaciarCarrito = async () => {
-    if (usarBD && usuario?.id) { // ✅ VALIDACIÓN
-      // ✅ Usuario con sesión: vaciar BD
+    if (usarBD && usuario?.id) { //  VALIDACIÓN
+      //  Usuario con sesión: vaciar BD
       try {
         await Deletedata(`carrito/VaciarCarrito/${usuario.id}`);
         setCarrito([]);
@@ -170,7 +172,7 @@ export function CarritoProvider({ children }) {
         console.error("Error al vaciar carrito en BD:", error);
       }
     } else {
-      // ✅ Usuario SIN sesión: vaciar localStorage
+      //  Usuario SIN sesión: vaciar localStorage
       setCarrito([]);
     }
   };
@@ -181,7 +183,7 @@ export function CarritoProvider({ children }) {
 
   // Cargar carrito desde la BD
   const cargarCarritoDesdeDB = async (id_usuario) => {
-    if (!id_usuario) { // ✅ VALIDACIÓN
+    if (!id_usuario) { //  VALIDACIÓN
       console.error("cargarCarritoDesdeDB: id_usuario es undefined");
       return;
     }
@@ -198,7 +200,7 @@ export function CarritoProvider({ children }) {
 
   // Sincronizar carrito al hacer login
   const sincronizarCarritoConBD = async (id_usuario) => {
-    if (!id_usuario) { // ✅ VALIDACIÓN
+    if (!id_usuario) { //  VALIDACIÓN
       console.error("sincronizarCarritoConBD: id_usuario es undefined");
       return;
     }
@@ -249,6 +251,22 @@ export function CarritoProvider({ children }) {
     return item ? item.cantidad : 0;
   };
 
+   //  NUEVA función para compra directa
+  const iniciarCompraDirecta = (producto, cantidad) => {
+    setCompraDirecta({
+      items: [{
+        ...producto,
+        cantidad: cantidad
+      }],
+      total: parseFloat(producto.precio) * cantidad
+    });
+  };
+
+  //  NUEVA función para limpiar compra directa
+  const limpiarCompraDirecta = () => {
+    setCompraDirecta(null);
+  };
+
   const value = {
     carrito,
     agregarAlCarrito,
@@ -265,9 +283,13 @@ export function CarritoProvider({ children }) {
     cargarCarritoDesdeDB,
     setUsuarioCarrito,
     usuario,
+    compraDirecta, //  NUEVO
+    iniciarCompraDirecta,
+    limpiarCompraDirecta
   };
 
   return (
-    <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>
+    // <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>
+     <CarritoContext.Provider value={value}>{children}</CarritoContext.Provider>
   );
 }
