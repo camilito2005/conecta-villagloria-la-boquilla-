@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import Manglar from "../assets/Manglares_LaBoquilla_Cartagena.jpg";
-import Canoas from "../assets/Canoas.jpg"
-import Guia from "../assets/Guia.jpg";
-import Comida from "../assets/comida.jpg";
+import Manglar from "../../public/imagenes/Manglares_LaBoquilla_Cartagena.jpg";
+import Canoas from "../../public/imagenes/Canoas.jpg"
+import Guia from "../../public/imagenes/Guia.jpg";
+import Comida from "../../public/imagenes/Comida.jpg";
 
 import "../css/home.css";
 
