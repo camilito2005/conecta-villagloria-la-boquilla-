@@ -26,7 +26,7 @@ export function VerificarToken(req, res, next) {
       return; // Evita llamar a next() si ya se envió una respuesta
     }
     
-    next(); // ✅ permite que ListarUsuarios se ejecute
+    next(); //  permite que ListarUsuarios se ejecute
   } catch (error) {
     console.log(error)
      return res.status(403).json({
