@@ -23,7 +23,7 @@ export function Agg_horarios() {
     const fecha = e.target.fecha.value;
     const hora = e.target.hora.value;
     const precio = e.target.precio.value;
-    const cupos_disponibles = e.target.cupos.value; // ✅ Corregido nombre
+    const cupos_disponibles = e.target.cupos.value; //  Corregido nombre
 
     // Validaciones básicas en el frontend
     if (!fecha || !hora || !precio || !cupos_disponibles) {
@@ -40,7 +40,7 @@ export function Agg_horarios() {
       hora, 
       id_guia, 
       precio: parseFloat(precio),
-      cupos_disponibles: parseInt(cupos_disponibles) // ✅ Agregado
+      cupos_disponibles: parseInt(cupos_disponibles) //  Agregado
     };
 
     const Respuesta = await Postdata("horarios/agg_horarios", Datos);
@@ -72,7 +72,7 @@ export function Agg_horarios() {
           <input 
             type="date" 
             name="fecha"
-            min={new Date().toISOString().split('T')[0]} // ✅ No permitir fechas pasadas
+            min={new Date().toISOString().split('T')[0]} //  No permitir fechas pasadas
             required
           />
           
