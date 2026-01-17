@@ -25,10 +25,24 @@ const __dirname = path.dirname(__filename);
 // Servir la carpeta Recursos públicamente
 app.use(cookieParser());
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://conecta-villagloria-la-boquilla-frontend.onrender.com'  // ← URL exacta de producción
+];
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://conecta-villagloria-la-boquilla-frontend.onrender.com'
-    : 'http://localhost:5173',
+  origin: function (origin, callback) {
+    // Permitir peticiones sin origin (Postman, apps móviles)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    console.log('Origen bloqueado por CORS:', origin);
+    return callback(new Error('No permitido por CORS'), false);
+  },
   credentials: true
 }));
 
