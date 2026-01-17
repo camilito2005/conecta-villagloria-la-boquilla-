@@ -46,6 +46,8 @@ app.use(cors({
   credentials: true
 }));
 
+// mensaje de configuración CORS previo
+
 // app.use(
 //   cors({
 //     origin: "http://localhost:5173", // la URL de tu frontend
