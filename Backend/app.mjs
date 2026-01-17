@@ -31,29 +31,29 @@ const allowedOrigins = [
   'https://conecta-villagloria-la-boquilla-frontend.onrender.com'  // ← URL exacta de producción
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // Permitir peticiones sin origin (Postman, apps móviles)
-    if (!origin) return callback(null, true);
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Permitir peticiones sin origin (Postman, apps móviles)
+//     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
+//     if (allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     }
     
-    console.log('Origen bloqueado por CORS:', origin);
-    return callback(new Error('No permitido por CORS'), false);
-  },
-  credentials: true
-}));
+//     console.log('Origen bloqueado por CORS:', origin);
+//     return callback(new Error('No permitido por CORS'), false);
+//   },
+//   credentials: true
+// }));
 
 // mensaje de configuración CORS previo
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // la URL de tu frontend
-//     credentials: true,               // ⬅️ necesario para enviar/recibir cookies
-//   })
-// );
+app.use(
+  cors({
+    origin: true, // la URL de tu frontend
+    credentials: true,               // ⬅️ necesario para enviar/recibir cookies
+  })
+);
 
 app.use(express.json());// esta línea permite que la aplicación pueda interpretar solicitudes con cuerpo en formato JSON
 app.use(express.urlencoded({ extended: true })); // Para formularios normales
