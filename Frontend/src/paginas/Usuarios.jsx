@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Getdata } from "../servicios/Apis.js";
 import { Modal } from "../componentes/Modal.jsx";
 import { useNavigate } from "react-router-dom";
-import "../css/Listarusuarios.css";
+import "../css/ListarUsuarios.css";
 
 export function Usuarios() {
   const navigate = useNavigate();
