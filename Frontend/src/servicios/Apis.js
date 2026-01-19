@@ -1,5 +1,6 @@
 // const BASE_URL = "http://localhost:3000/api/";
-const BASE_URL = `${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/`;
+const BASE_URL = `${import.meta.env.VITE_URL || "http://localhost:3000"}/api/`;
+console.log("BASE_URL en Apis.js:", BASE_URL);
 // async = siempre devuelve una promesa (Promise) y puedes usar await dentro de ella.
 
 async function Fetchapi(accion, options = {}) {
