@@ -44,7 +44,7 @@ app.use(cookieParser());
 //   },
 console.log('NODE_ENV:', process.env.NODE_ENV);
 app.use(cors({
-  origin: process.env.VITE_NODE_ENV === 'production' 
+  origin: process.env.NODE_ENV === 'production' 
     ? 'https://conecta-villagloria-la-boquilla-frontend.onrender.com'
     : 'http://localhost:5173',
   credentials: true,
