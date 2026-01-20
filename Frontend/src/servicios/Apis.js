@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:3000/api/";
-const BASE_URL = import.meta.env.NODE_ENV === "production"
+const BASE_URL = `${import.meta.env.NODE_ENV}` === "production"
   ? "https://conecta-con-villagloria-backend.onrender.com/api/"
   : "http://localhost:3000/api/";
   console.log("BASE_URL:", BASE_URL);
