@@ -42,6 +42,9 @@ app.use(cookieParser());
 //     console.log('Origen bloqueado por CORS:', origin);
 //     return callback(new Error('No permitido por CORS'));
 //   },
+
+
+
 console.log('NODE_ENV:', process.env.NODE_ENV);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
@@ -74,6 +77,22 @@ app.use("/api/productos", Productosrouter);
 app.use("/api/negocios", Negociosrouter);
 app.use("/api/resenas", Reseñasroutes);
 app.use("/api/carrito", Carritosroutes);
+
+app.get("/api/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json({
+      ok: true,
+      time: result.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+});
 
 app.listen(process.env.PORT || 3000, () =>
   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`)
