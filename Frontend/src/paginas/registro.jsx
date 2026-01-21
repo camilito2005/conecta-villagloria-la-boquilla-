@@ -42,9 +42,9 @@ export function Registro() {
           message: result.modal.message,
           type: result.modal.type,
         });
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = "/login";
+        // }, 1000);
       }
     } catch (error) {
       console.error("Error al registrar usuario:", error);
