@@ -15,7 +15,12 @@ export function ModalEditarUsuario({ usuario, onClose, onSave }) {
 
   // Vista previa solo para mostrar la imagen actual
   const [preview] = useState(
-    usuario.foto ? `http://localhost:3000${usuario.foto}` : null
+    // si hay foto, mostrarla; si no, null y si el entorno es produccion usa VITE_URL si no usa VITE_API_URL
+    usuario.foto && usuario.foto !== "null"
+      ? import.meta.env.VITE_NODE_ENV === "production"
+        ? `${import.meta.env.VITE_URL}${usuario.foto}`
+        : `${import.meta.env.VITE_API_URL}${usuario.foto}`
+      : null
   );
 
   const handleChange = (e) => {
