@@ -382,8 +382,9 @@ export async function CerrarSesion(req, res) {
   try {
     res.clearCookie("token_acceso", {
       httpOnly: true,
-      secure: false, // true si usas HTTPS en producción
-      sameSite: "lax", // esta propiedad ayuda a prevenir ataques CSRF
+      secure: true, // true si usas HTTPS en producción
+      sameSite: "None",   // 🔴 DEBE SER IGUAL
+      path: "/",
     });
 
     return res.json({
