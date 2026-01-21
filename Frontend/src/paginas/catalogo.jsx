@@ -216,11 +216,12 @@ export function Catalogo() {
             type="text"
             placeholder="🔍 Buscar productos..."
             value={busqueda}
+            name="busqueda"
             onChange={(e) => setBusqueda(e.target.value)}
             className="input-busqueda-catalogo"
           />
 
-          <select
+          <select name="categoria"
             value={filtroCategoria}
             onChange={(e) => {
               setFiltroCategoria(e.target.value);
@@ -236,7 +237,7 @@ export function Catalogo() {
             ))}
           </select>
 
-          <select
+          <select name="subcategorias"
             value={filtroSubcategoria}
             onChange={(e) => setFiltroSubcategoria(e.target.value)}
             className="select-filtro-catalogo"
@@ -252,7 +253,7 @@ export function Catalogo() {
               ))}
           </select>
 
-          <select
+          <select name="negocios"
             value={filtroNegocio}
             onChange={(e) => setFiltroNegocio(e.target.value)}
             className="select-filtro-catalogo"
@@ -265,7 +266,7 @@ export function Catalogo() {
             ))}
           </select>
 
-          <select
+          <select name="ordenamiento"
             value={ordenamiento}
             onChange={(e) => setOrdenamiento(e.target.value)}
             className="select-filtro-catalogo"
