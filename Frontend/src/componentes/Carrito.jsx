@@ -16,7 +16,11 @@ export function Carrito() {
   } = useCarrito();
 
   const navigate = useNavigate(); //  Hook para navegación
-  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  // si el entorno es prodction
+  const BASE_URL =
+    import.meta.env.VITE_NODE_ENV === "production"
+      ? import.meta.env.VITE_URL
+      : import.meta.env.VITE_API_URL;
 
   const handleCheckout = () => {
     // Aquí iría la lógica de checkout/pago
