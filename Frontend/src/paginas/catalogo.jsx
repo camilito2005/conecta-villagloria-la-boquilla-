@@ -40,9 +40,8 @@ export function Catalogo() {
   // si el entorno es prodction
   const BASE_URL =
     import.meta.env.VITE_NODE_ENV === "production"
-      ? import.meta.env.VITE_URL_FRONTEND
+      ? import.meta.env.VITE_URL
       : import.meta.env.VITE_API_URL;
-
 
 
   // Cargar datos
