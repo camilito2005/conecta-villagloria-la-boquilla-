@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
+import pool from './src/Configuracion/Conexion.mjs';
 
 import CargosRoutes from './src/Rutas/Cargos.routes.mjs';
 import UsuariosRoutes from './src/Rutas/Usuarios.routes.mjs';
