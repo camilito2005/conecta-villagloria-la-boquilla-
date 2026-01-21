@@ -345,8 +345,9 @@ export async function AutenticarUsuario(req, res) {
       );
       res.cookie("token_acceso", token, {
         httpOnly: true,
-        secure: false, // true en producción con HTTPS
+        secure: true, // true en producción con HTTPS
         sameSite: "lax",
+        sameSite: "None",
         maxAge: 2 * 60 * 60 * 1000, // 2 horas
       });
 
