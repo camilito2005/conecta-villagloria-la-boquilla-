@@ -79,21 +79,20 @@ app.use("/api/negocios", Negociosrouter);
 app.use("/api/resenas", Reseñasroutes);
 app.use("/api/carrito", Carritosroutes);
 
-app.get("/api/test-db", async (req, res) => {
+app.get("/api/debug/tablas", async (req, res) => {
   try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({
-      ok: true,
-      time: result.rows[0],
-    });
+    const result = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+    `);
+
+    res.json(result.rows);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      ok: false,
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 });
+
 
 app.listen(process.env.PORT || 3000, () =>
   console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`)
