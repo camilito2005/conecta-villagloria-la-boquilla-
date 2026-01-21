@@ -43,9 +43,6 @@ export function Catalogo() {
       ? import.meta.env.VITE_URL
       : import.meta.env.VITE_API_URL;
 
-  // const BASE_URL = import.meta.env.VITE_URL || import.meta.env.VITE_API_URL;
-  console.log("BASE_URL:", BASE_URL);
-
   // Cargar datos
   const cargarProductos = async () => {
     const data = await Getdata("productos/publicos");
