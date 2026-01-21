@@ -77,7 +77,6 @@ export function Perfil() {
         ? `${import.meta.env.VITE_URL}${usuario.foto}`
         : `${import.meta.env.VITE_API_URL}${usuario.foto}`
       : null;
-      console.log("URL de la foto de perfil:", fotourl);
 
   // const fotourl =
   //   usuario?.foto && usuario.foto !== "null"
