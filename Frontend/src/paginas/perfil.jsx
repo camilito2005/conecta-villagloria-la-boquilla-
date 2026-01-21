@@ -68,11 +68,21 @@ export function Perfil() {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
-  // 🔹 Evitar errores cuando no hay usuario cargado
+  // 🔹 Evitar errores cuando no hay usuario cargado y si el entorno es produccion use la ruta de produccion
+
+// si hay foto y el entono es production usa VITE_URL, si no usa localhost
   const fotourl =
     usuario?.foto && usuario.foto !== "null"
-      ? `http://localhost:3000${usuario.foto}`
+      ? import.meta.env.VITE_NODE_ENV === "production"
+        ? `${import.meta.env.VITE_URL}${usuario.foto}`
+        : `${import.meta.env.VITE_API_URL}${usuario.foto}`
       : null;
+      console.log("URL de la foto de perfil:", fotourl);
+
+  // const fotourl =
+  //   usuario?.foto && usuario.foto !== "null"
+  //     ? `http://localhost:3000${usuario.foto}`
+  //     : null;
   const nombre = usuario?.nombre || "Sin nombre";
   const inicial = nombre.charAt(0).toUpperCase();
   const correo = usuario?.correo || "No disponible";
