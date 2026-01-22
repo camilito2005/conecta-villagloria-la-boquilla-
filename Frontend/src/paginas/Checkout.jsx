@@ -31,7 +31,6 @@ export function Checkout() {
 
   //  Determinar qué productos mostrar
   const productosCheckout = compraDirecta ? compraDirecta.items : carrito;
-  console.log("Productos para checkout:", productosCheckout);
   const totalCheckout = compraDirecta ? compraDirecta.total : calcularTotal();
 
   // Datos de envío
@@ -139,8 +138,6 @@ export function Checkout() {
         metodo_pago: metodoPago,
         es_compra_directa: !!compraDirecta, //  Indicar si es compra directa
       };
-
-      console.log("Enviando orden:", ordenData);
 
       const resultado = await Postdata("pagos/crear-orden", ordenData);
 
