@@ -25,7 +25,6 @@ const __dirname = path.dirname(__filename);
 
 app.use(cookieParser());
 
-console.log('NODE_ENV:', process.env.NODE_ENV);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? 'https://conecta-villagloria-la-boquilla-frontend.onrender.com'
