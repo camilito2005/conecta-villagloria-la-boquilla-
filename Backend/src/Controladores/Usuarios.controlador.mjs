@@ -17,33 +17,7 @@ dotenv.config();
 
 export async function RegistrarUsuarios(req, res) {
   try {
-    const NuevoUsuario = req.body;aa
-    // console.log("datos de usuario",req.body);
-
-    // -------------------------------
-    // MANEJO DE IMAGEN OPCIONAL
-    // -------------------------------
-    // if (req.file) {
-    //   // aseguramos que multer filtró bien la imagen
-    //   const nombreSeguro = req.file.filename;
-
-    //   // prevenir intentos de path traversal
-    //   if (nombreSeguro.includes("..")) {
-    //     return res.status(400).json({
-    //       showModal: true,
-    //       modal: {
-    //         title: "Archivo inválido",
-    //         message: "El nombre de la imagen no es válido",
-    //         type: "error",
-    //       },
-    //     });
-    //   }
-
-    //   NuevoUsuario.foto = `/Recursos/${nombreSeguro}`;
-    // } else {
-    //   // si no hay imagen, queda null
-    //   NuevoUsuario.foto = null;
-    // }
+    const NuevoUsuario = req.body;
 
     // -------------------------------
     // VALIDACIÓN GENERAL DE CAMPOS
